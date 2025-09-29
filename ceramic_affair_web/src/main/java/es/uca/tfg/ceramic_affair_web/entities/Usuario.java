@@ -1,7 +1,9 @@
 package es.uca.tfg.ceramic_affair_web.entities;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import es.uca.tfg.ceramic_affair_web.security.Rol;
 import jakarta.persistence.CollectionTable;
@@ -34,6 +36,21 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private boolean verificado;
+
+    @Column(unique = true, nullable = true)
+    private String tokenVerificacion;
+
+    @Column(unique = true, nullable = true)
+    private String tokenRecuperacion;
+
+    @Column(nullable = true)
+    private LocalDateTime fechaExpiracionTokenVerificacion;
+
+    @Column(nullable = true)
+    private LocalDateTime fechaExpiracionTokenRecuperacion;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
@@ -47,6 +64,20 @@ public class Usuario {
     }
 
     /**
+     * Constructor con parámetros para crear un administrador.
+     * 
+     * @param email El correo electrónico del usuario.
+     * @param password La contraseña del usuario.
+     * @param roles Los roles asignados al usuario.
+     */
+    public Usuario(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.roles = new HashSet<>(Set.of(Rol.ADMIN, Rol.USER));
+        this.verificado = true;
+    }
+
+    /**
      * Constructor con parámetros para crear un usuario.
      * 
      * @param email El correo electrónico del usuario.
@@ -56,7 +87,9 @@ public class Usuario {
     public Usuario(String email, String password, Set<Rol> roles) {
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.roles = new HashSet<>(roles);
+        this.verificado = false;
+        generarTokenVerificacion();
     }
 
     /**
@@ -84,6 +117,51 @@ public class Usuario {
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * Método para obtener el estado de verificación del usuario.
+     * 
+     * @return true si el usuario está verificado, false en caso contrario.
+     */
+    public boolean isVerificado() {
+        return verificado;
+    }
+
+    /**
+     * Método para obtener el token de verificación del usuario.
+     * 
+     * @return El token de verificación del usuario.
+     */
+    public String getTokenVerificacion() {
+        return tokenVerificacion;
+    }
+
+    /**
+     * Método para obtener el token de recuperación del usuario.
+     * 
+     * @return El token de recuperación del usuario.
+     */
+    public String getTokenRecuperacion() {
+        return tokenRecuperacion;
+    }
+
+    /**
+     * Método para obtener la fecha de expiración del token de verificación del usuario.
+     * 
+     * @return La fecha de expiración del token de verificación del usuario.
+     */
+    public LocalDateTime getFechaExpiracionTokenVerificacion() {
+        return fechaExpiracionTokenVerificacion;
+    }
+
+    /**
+     * Método para obtener la fecha de expiración del token de recuperación del usuario.
+     * 
+     * @return La fecha de expiración del token de recuperación del usuario.
+     */
+    public LocalDateTime getFechaExpiracionTokenRecuperacion() {
+        return fechaExpiracionTokenRecuperacion;
     }
 
     /**
@@ -123,11 +201,86 @@ public class Usuario {
     }
 
     /**
+     * Método para establecer el estado de verificación del usuario.
+     * 
+     * @param verificado El nuevo estado de verificación del usuario.
+     */
+    public void setVerificado(boolean verificado) {
+        this.verificado = verificado;
+    }
+
+    /**
+     * Método para verificar el usuario.
+     * 
+     */
+    public void verificar() {
+        this.verificado = true;
+        this.tokenVerificacion = null;
+        this.fechaExpiracionTokenVerificacion = null;
+    }
+
+    /**
+     * Método para establecer el token de verificación del usuario.
+     * 
+     * @param tokenVerificacion El nuevo token de verificación del usuario.
+     */
+    public void setTokenVerificacion(String tokenVerificacion) {
+        this.tokenVerificacion = tokenVerificacion;
+    }
+
+    /**
+     * Método para establecer el token de recuperación del usuario.
+     * 
+     * @param tokenRecuperacion El nuevo token de recuperación del usuario.
+     */
+    public void setTokenRecuperacion(String tokenRecuperacion) {
+        this.tokenRecuperacion = tokenRecuperacion;
+    }
+
+    /**
+     * Método para establecer la fecha de expiración del token de verificación del usuario.
+     * 
+     * @param fechaExpiracionTokenVerificacion La nueva fecha de expiración del token de verificación del usuario.
+     */
+    public void setFechaExpiracionTokenVerificacion(LocalDateTime fechaExpiracionTokenVerificacion) {
+        this.fechaExpiracionTokenVerificacion = fechaExpiracionTokenVerificacion;
+    }
+
+    /**
+     * Método para establecer la fecha de expiración del token de recuperación del usuario.
+     * 
+     * @param fechaExpiracionTokenRecuperacion La nueva fecha de expiración del token de recuperación del usuario.
+     */
+    public void setFechaExpiracionTokenRecuperacion(LocalDateTime fechaExpiracionTokenRecuperacion) {
+        this.fechaExpiracionTokenRecuperacion = fechaExpiracionTokenRecuperacion;
+    }
+
+    /**
      * Método para establecer los roles del usuario.
      * 
      * @param roles El nuevo conjunto de roles del usuario.
      */
     public void setRoles(Set<Rol> roles) {
-        this.roles = roles;
+        this.roles = new HashSet<>(roles);
+    }
+
+    /**
+     * Método para regenerar el token de verificación del usuario.
+     */
+    public void regenerarTokenVerificacion() {
+        generarTokenVerificacion();
+    }
+
+    /**
+     * Método para generar un nuevo token de recuperación del usuario.
+     */
+    public void generarTokenRecuperacion() {
+        this.tokenRecuperacion = UUID.randomUUID().toString();
+        this.fechaExpiracionTokenRecuperacion = LocalDateTime.now().plusHours(1); // Token válido por 1 hora
+    }
+
+    private void generarTokenVerificacion() {
+        this.tokenVerificacion = UUID.randomUUID().toString();
+        this.fechaExpiracionTokenVerificacion = LocalDateTime.now().plusDays(1); // Token válido por 1 día
     }
 }
