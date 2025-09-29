@@ -2,6 +2,7 @@ package es.uca.tfg.ceramic_affair_web.DTOs;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * DTO para el inicio de sesión.
@@ -16,7 +17,11 @@ public class LoginDTO {
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
+
+    @NotBlank(message = "El token de reCAPTCHA es obligatorio")
+    private String recaptchaToken;
 
     public LoginDTO() {
         // Constructor por defecto
@@ -41,5 +46,13 @@ public class LoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRecaptchaToken() {
+        return recaptchaToken;
+    }
+
+    public void setRecaptchaToken(String recaptchaToken) {
+        this.recaptchaToken = recaptchaToken;
     }
 }
