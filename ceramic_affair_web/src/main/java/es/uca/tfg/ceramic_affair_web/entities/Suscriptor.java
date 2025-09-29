@@ -34,9 +34,6 @@ public class Suscriptor {
     private String tokenDesuscripcion;
 
     @Column(nullable = false)
-    private LocalDateTime fechaCreacionToken;
-
-    @Column(nullable = false)
     private LocalDateTime fechaExpiracionToken;
 
     /**
@@ -112,15 +109,6 @@ public class Suscriptor {
     }
 
     /**
-     * Método para obtener la fecha de creación del token de verificación del suscriptor.
-     * 
-     * @return la fecha de creación del token de verificación del suscriptor
-     */
-    public LocalDateTime getFechaCreacionToken() {
-        return fechaCreacionToken;
-    }
-
-    /**
      * Método para obtener la fecha de expiración del token de verificación del suscriptor.
      * 
      * @return la fecha de expiración del token de verificación del suscriptor
@@ -166,15 +154,6 @@ public class Suscriptor {
     }
 
     /**
-     * Método para establecer la fecha de creación del suscriptor.
-     * 
-     * @param fechaCreacion la nueva fecha de creación del suscriptor
-     */
-    public void setFechaCreacionToken(LocalDateTime fechaCreacion) {
-        this.fechaCreacionToken = fechaCreacion;
-    }
-
-    /**
      * Método para establecer la fecha de expiración del token de verificación del suscriptor.
      * 
      * @param fechaExpiracion la nueva fecha de expiración del token de verificación del suscriptor
@@ -200,7 +179,6 @@ public class Suscriptor {
 
     private void generarNuevoTokenVerificacion() {
         this.tokenVerificacion = UUID.randomUUID().toString();
-        this.fechaCreacionToken = LocalDateTime.now();
-        this.fechaExpiracionToken = this.fechaCreacionToken.plusDays(1); // Token válido por 1 día
+        this.fechaExpiracionToken = LocalDateTime.now().plusDays(1); // Token válido por 1 día
     }
 }
