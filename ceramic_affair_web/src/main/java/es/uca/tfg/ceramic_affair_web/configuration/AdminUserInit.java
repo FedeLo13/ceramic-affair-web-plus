@@ -1,7 +1,5 @@
 package es.uca.tfg.ceramic_affair_web.configuration;
 
-import java.util.Set;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -9,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.uca.tfg.ceramic_affair_web.entities.Usuario;
 import es.uca.tfg.ceramic_affair_web.repositories.UsuarioRepo;
-import es.uca.tfg.ceramic_affair_web.security.Rol;
 
 /**
  * Clase de configuración para inicializar el usuario administrador.
@@ -37,7 +34,7 @@ public class AdminUserInit implements CommandLineRunner {
         String passwordAdmin = "admin123";
 
         if (!usuarioRepo.existsByEmail(emailAdmin)) {
-            Usuario admin = new Usuario(emailAdmin, passwordEncoder.encode(passwordAdmin), Set.of(Rol.ADMIN));
+            Usuario admin = new Usuario(emailAdmin, passwordEncoder.encode(passwordAdmin));
             usuarioRepo.save(admin);
             System.out.println("Usuario administrador creado: " + emailAdmin);
         } else {
