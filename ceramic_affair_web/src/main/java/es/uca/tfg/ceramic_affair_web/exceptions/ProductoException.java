@@ -34,4 +34,25 @@ public class ProductoException {
             super(mensaje, HttpStatus.NOT_FOUND);
         }
     }
+
+    /**
+     * Excepción lanzada cuando el producto está sold out.
+     */
+    public static class SoldOut extends BusinessException {
+        /**
+         * Constructor de la excepción.
+         * @param id
+         */
+        public SoldOut(Long id) {
+            super("Product with ID " + id + " is sold out", HttpStatus.BAD_REQUEST);
+        }
+
+        /**
+         * Constructor overloaded para mensajes personalizados.
+         * @param mensaje
+         */
+        public SoldOut(String mensaje) {
+            super(mensaje, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
