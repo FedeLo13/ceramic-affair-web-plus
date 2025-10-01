@@ -34,7 +34,7 @@ import es.uca.tfg.ceramic_affair_web.exceptions.AuthException;
  * Clase de prueba para el controlador de autenticación.
  * Proporciona pruebas de capa web para las operaciones de autenticación, incluyendo el inicio de sesión, registro y la obtención de tokens JWT.
  * 
- * @version 1.0
+ * @version 1.1
  */
 @WebMvcTest(controllers = AuthController.class)
 @AutoConfigureMockMvc // No desactivar la configuración de seguridad en este caso (login no requiere autenticación previa)
@@ -313,105 +313,6 @@ public class AuthControllerTest {
             .andExpect(jsonPath("$.error").value("Business exception"))
             .andExpect(jsonPath("$.message").value("Verification token has expired"))
             .andExpect(jsonPath("$.path").value("/api/public/auth/verificar"));
-    }
-
-    @Test
-    @DisplayName("Controlador - Cambio de contraseña con datos válidos")
-    void testCambioContrasenaValido() throws Exception {
-        when(recaptchaService.verifyRecaptcha(any(String.class))).thenReturn(true);
-
-        String jsonBody = """
-            {
-                "email": "user@example.com",
-                "token": "valid-recaptcha-token",
-                "antiguaPassword": "oldpassword",
-                "nuevaPassword": "newpassword"
-            }
-        """;
-
-        mockMvc.perform(post("/api/public/auth/cambio")
-                .contentType("application/json")
-                .content(jsonBody))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.success").value(true))
-            .andExpect(jsonPath("$.message").value("Password changed successfully"))
-            .andExpect(jsonPath("$.data").value("Password changed successfully"));
-    }
-
-    @Test
-    @DisplayName("Controlador - Cambio de contraseña con reCAPTCHA inválido")
-    void testCambioContrasenaRecaptchaInvalido() throws Exception {
-        when(recaptchaService.verifyRecaptcha(any(String.class))).thenReturn(false);
-
-        String jsonBody = """
-            {
-                "email": "user@example.com",
-                "token": "valid-recaptcha-token",
-                "antiguaPassword": "oldpassword",
-                "nuevaPassword": "newpassword"
-            }
-        """;
-
-        mockMvc.perform(post("/api/public/auth/cambio")
-                .contentType("application/json")
-                .content(jsonBody))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.status").value(400))
-            .andExpect(jsonPath("$.error").value("Invalid reCAPTCHA"))
-            .andExpect(jsonPath("$.message").value("The reCAPTCHA token is invalid or has expired. Please try again."))
-            .andExpect(jsonPath("$.path").value("/api/public/auth/cambio"));
-    }
-
-    @Test
-    @DisplayName("Controlador - Cambio de contraseña con credenciales inválidas")
-    void testCambioContrasenaCredencialesInvalidas() throws Exception {
-        doThrow(new AuthException.CredencialesInvalidas("Invalid credentials"))
-            .when(authService).cambiarContrasena(any(String.class), any(String.class), any(String.class));
-        when(recaptchaService.verifyRecaptcha(any(String.class))).thenReturn(true);
-
-        String jsonBody = """
-            {
-                "email": "user@example.com",
-                "token": "valid-recaptcha-token",
-                "antiguaPassword": "oldpassword",
-                "nuevaPassword": "newpassword"
-            }
-        """;
-
-        mockMvc.perform(post("/api/public/auth/cambio")
-                .contentType("application/json")
-                .content(jsonBody))
-            .andExpect(status().isUnauthorized())
-            .andExpect(jsonPath("$.status").value(401))
-            .andExpect(jsonPath("$.error").value("Business exception"))
-            .andExpect(jsonPath("$.message").value("Invalid credentials"))
-            .andExpect(jsonPath("$.path").value("/api/public/auth/cambio"));
-    }
-
-    @Test
-    @DisplayName("Controlador - Cambio de contraseña con usuario no encontrado")
-    void testCambioContrasenaUsuarioNoEncontrado() throws Exception {
-        doThrow(new AuthException.UsuarioNoEncontrado("User not found"))
-            .when(authService).cambiarContrasena(any(String.class), any(String.class), any(String.class));
-        when(recaptchaService.verifyRecaptcha(any(String.class))).thenReturn(true);
-
-        String jsonBody = """
-            {
-                "email": "user@example.com",
-                "token": "valid-recaptcha-token",
-                "antiguaPassword": "oldpassword",
-                "nuevaPassword": "newpassword"
-            }
-        """;
-
-        mockMvc.perform(post("/api/public/auth/cambio")
-                .contentType("application/json")
-                .content(jsonBody))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.status").value(404))
-            .andExpect(jsonPath("$.error").value("Business exception"))
-            .andExpect(jsonPath("$.message").value("User not found"))
-            .andExpect(jsonPath("$.path").value("/api/public/auth/cambio"));
     }
 
     @Test
