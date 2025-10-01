@@ -30,6 +30,8 @@ import jakarta.transaction.Transactional;
 /**
  * Clase de prueba para el servicio AuthService.
  * Proporciona pruebas de integración para las operaciones de autenticación y registro de usuarios.
+ * 
+ * @version 1.0
  */
 @SpringBootTest
 @Transactional
@@ -49,7 +51,7 @@ public class AuthServiceTest {
     private JwtUtils jwtUtils;
 
     @MockitoBean
-    private EmailService emailService;
+    private GmailEmailService emailService;
 
     @MockitoBean
     private RecaptchaService recaptchaService;

@@ -22,4 +22,9 @@ public class DummyController {
     public String protectedResource() {
         return "Protected content";
     }
+
+    @GetMapping("/user/profile")
+    public String userProfile() {
+        return "User profile";
+    }
 }

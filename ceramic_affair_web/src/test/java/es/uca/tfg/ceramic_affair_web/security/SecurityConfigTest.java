@@ -23,7 +23,7 @@ import java.util.Set;
  * Clase de prueba para la configuración de seguridad.
  * Esta clase se utiliza para realizar pruebas de integración relacionadas con la seguridad de la aplicación.
  * 
- * @version 1.0
+ * @version 1.1
  */
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -53,6 +53,30 @@ public class SecurityConfigTest {
     @DisplayName("Rechazar acceso a recursos protegidos sin autenticación")
     public void testProtectedAccessWithoutAuthentication() throws Exception {
         mockMvc.perform(get("/api/protected/resource"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("Rechazar acceso a recursos de usuario sin autenticación")
+    public void testUserAccessWithoutAuthentication() throws Exception {
+        mockMvc.perform(get("/api/user/profile"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("Permitir acceso al usuario con autenticación")
+    public void testUserAccessWithAuthentication() throws Exception {
+        String token = generateTestToken("user@example.com", Set.of(Rol.USER));
+        mockMvc.perform(get("/api/user/profile")
+                .header("Authorization", "Bearer " + token))
+            .andExpect(status().isOk())
+            .andExpect(content().string("User profile"));
+    }
+
+    @Test
+    @DisplayName("Rechazar acceso a recursos de administrador sin autenticación")
+    public void testAdminAccessWithoutAuthentication() throws Exception {
+        mockMvc.perform(get("/api/admin/dashboard"))
                 .andExpect(status().isUnauthorized());
     }
 
