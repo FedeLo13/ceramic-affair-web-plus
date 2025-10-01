@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import es.uca.tfg.ceramic_affair_web.entities.Usuario;
 
@@ -13,6 +14,7 @@ import es.uca.tfg.ceramic_affair_web.entities.Usuario;
  * 
  * @version 1.0
  */
+@Repository
 public interface UsuarioRepo extends JpaRepository<Usuario, Long> {
     /**
      * Verifica si existe un usuario con el correo electrónico dado.
