@@ -20,7 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  * Esta clase se encarga de definir las reglas de seguridad y autenticación
  * para la aplicación web.
  * 
- * @version 1.0
+ * @version 1.1
  */
 @Configuration
 @EnableWebSecurity
@@ -83,6 +83,7 @@ public class SecurityConfig {
                     "/v3/api-docs/**", // Documentación de la API
                     "/swagger-ui.html" // Página principal de Swagger UI
                 ).permitAll() // Permitir acceso a los endpoints públicos
+                .requestMatchers("/api/user/**").hasRole("USER") // Requerir rol USER para los endpoints de usuario
                 .requestMatchers("/api/admin/**").hasRole("ADMIN") // Requerir rol ADMIN para los endpoints de administración
                 .anyRequest().authenticated() // Requerir autenticación para cualquier otra solicitud
             )
