@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.uca.tfg.ceramic_affair_web.DTOs.CambioDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.LoginDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.OlvidoDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.RecuperacionDTO;
@@ -28,10 +27,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 /**
- * Controlador para la gestión de inicio de sesión.
- * Este controlador maneja las solicitudes de inicio de sesión y proporciona endpoints para autenticar usuarios.
+ * Controlador para la gestión de autenticación.
+ * Este controlador maneja las operaciones de inicio de sesión, registro y recuperación de contraseña.
  * 
- * @version 1.0
+ * @version 1.1
  */
 @RestController
 @RequestMapping("/api/public/auth")
@@ -112,26 +111,6 @@ public class AuthController {
     public ResponseEntity<Void> verifyUser(@RequestParam String token) {
         authService.verify(token);
         return redirectToFrontend("success");
-    }
-
-    @PostMapping("/cambio")
-    @Operation(summary = "Cambiar contraseña", description = "Permite a un usuario cambiar su contraseña proporcionando la antigua y la nueva contraseña", tags = { "Auth" })
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Contraseña cambiada exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Datos inválidos proporcionados o reCAPTCHA inválido"),
-        @ApiResponse(responseCode = "401", description = "Credenciales inválidas"),
-        @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    public ResponseEntity<ApiResponseType<String>> changePassword(@RequestBody CambioDTO dto) {
-        // Validar el reCAPTCHA
-        boolean isRecaptchaValid = recaptchaService.verifyRecaptcha(dto.getToken());
-        if (!isRecaptchaValid) {
-            throw new RecaptchaException.Invalido();
-        }
-
-        authService.cambiarContrasena(dto.getEmail(), dto.getAntiguaPassword(), dto.getNuevaPassword());
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Password changed successfully", "Password changed successfully"));
     }
 
     @PostMapping("/olvido")
