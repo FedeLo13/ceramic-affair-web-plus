@@ -8,10 +8,19 @@ import es.uca.tfg.ceramic_affair_web.entities.Producto;
  * Clase que contiene las especificaciones para la entidad Producto.
  * Se utiliza para construir consultas dinámicas y complejas en la base de datos.
  * 
- * @version 1.0
+ * @version 1.1
  */
 public class ProductoSpecifications {
     
+    /**
+     * Especificación para filtrar productos activos.
+     * 
+     * @return una especificación que filtra productos activos
+     */
+    public static Specification<Producto> activos() {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.isTrue(root.get("activo"));
+    }
+
     /**
      * Especificación para filtrar productos por categoría.
      * 

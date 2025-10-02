@@ -24,7 +24,7 @@ import es.uca.tfg.ceramic_affair_web.repositories.ProductoSpecifications;
 /**
  * Servicio para la entidad Producto.
  * 
- * @version 1.1
+ * @version 1.2
  */
 @Service
 public class ProductoService {
@@ -34,9 +34,6 @@ public class ProductoService {
 
     @Autowired
     private CategoriaRepo categoriaRepo;
-
-    @Autowired
-    private ImagenService imagenService;
 
     @Autowired
     private ImagenRepo imagenRepo;
@@ -76,7 +73,7 @@ public class ProductoService {
      */
     public void modificarProducto(Long id, ProductoDTO productoDTO) {
         // 1. Obtener el producto por su id
-        Producto producto = productoRepo.findById(id)
+        Producto producto = productoRepo.findByIdAndActivoTrue(id)
             .orElseThrow(() -> new ProductoException.NoEncontrado(id));
 
         // 2. Actualizar los campos del producto
@@ -110,7 +107,7 @@ public class ProductoService {
      */
     public void establecerStock(Long id, boolean soldOut) {
         // 1. Obtener el producto por su id
-        Producto producto = productoRepo.findById(id)
+        Producto producto = productoRepo.findByIdAndActivoTrue(id)
             .orElseThrow(() -> new ProductoException.NoEncontrado(id));
 
         // 2. Actualizar el estado de stock del producto
@@ -128,7 +125,7 @@ public class ProductoService {
      * @throws ProductoException.NoEncontrado si no se encuentra el producto
      */
     public Producto obtenerPorId(Long id) {
-        return productoRepo.findById(id)
+        return productoRepo.findByIdAndActivoTrue(id)
             .orElseThrow(() -> new ProductoException.NoEncontrado(id));
     }
 
@@ -144,7 +141,8 @@ public class ProductoService {
      */
     public Page<Producto> filtrarProductos(String nombre, Long categoria, Boolean soloEnStock, String orden, Pageable pageable) {
         Specification<Producto> spec = Specification
-            .where(ProductoSpecifications.nombreLike(nombre))
+            .where(ProductoSpecifications.activos())
+            .and(ProductoSpecifications.nombreLike(nombre))
             .and(ProductoSpecifications.conCategoria(categoria))
             .and(ProductoSpecifications.enStock(soloEnStock))
             .and(ProductoSpecifications.ordenarPorFecha(orden));
@@ -160,15 +158,13 @@ public class ProductoService {
      * @throws ProductoException.NoEncontrado si no se encuentra el producto
      */
     public void eliminarProducto(Long id) throws IOException {
-        Producto producto = productoRepo.findById(id)
+        Producto producto = productoRepo.findByIdAndActivoTrue(id)
             .orElseThrow(() -> new ProductoException.NoEncontrado(id));
 
-        // Eliminar las imágenes asociadas al producto
-        for (Imagen imagen : producto.getImagenes()) {
-            imagenService.eliminarImagen(imagen.getId());
-        }
-        
-        productoRepo.delete(producto);
+        // Establecer el producto como inactivo (soft delete)
+        producto.setActivo(false);
+
+        productoRepo.save(producto);
     }
 
     /**
@@ -178,6 +174,8 @@ public class ProductoService {
      * @return una lista de todos los productos
      */ 
     public Page<Producto> obtenerTodos(Pageable pageable) {
-        return productoRepo.findAll(pageable);
+        Specification<Producto> spec = Specification
+            .where(ProductoSpecifications.activos());
+        return productoRepo.findAll(spec, pageable);
     }
 }

@@ -65,7 +65,7 @@ public class CarritoService {
         Usuario usuario = usuarioRepo.findById(usuarioId)
             .orElseThrow(() -> new AuthException.UsuarioNoEncontrado());
 
-        Producto producto = productoRepo.findById(productoId)
+        Producto producto = productoRepo.findByIdAndActivoTrue(productoId)
             .orElseThrow(() -> new ProductoException.NoEncontrado(productoId));
 
         // 2. Obtener/crear el carrito del usuario

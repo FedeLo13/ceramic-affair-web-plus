@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * Clase de prueba para la entidad Producto.
  * Proporciona pruebas unitarias para los métodos de la clase Producto.
  * 
- * @version 1.1
+ * @version 1.2
  */
 public class ProductoTest {
     
@@ -38,6 +38,7 @@ public class ProductoTest {
         assertNull(producto.getFechaCreacion()); // Verifica que la fecha de creación sea nula (aún no persiste en la base de datos)
         assertNotNull(producto.getImagenes()); // Verifica que la lista de imágenes no sea nula
         assertTrue(producto.getImagenes().isEmpty()); // Verifica que la lista de imágenes esté vacía
+        assertTrue(producto.isActivo()); // Verifica que el producto esté activo por defecto
     }
 
     @Test
@@ -68,6 +69,7 @@ public class ProductoTest {
         assertTrue(producto.isSoldOut()); // Verifica que soldOut sea true
         assertNotNull(producto.getPrecio()); // Verifica que el precio no sea nulo
         assertEquals(precio, producto.getPrecio()); // Verifica que el precio sea el esperado
+        assertTrue(producto.isActivo()); // Verifica que el producto esté activo por defecto
     }
 
     @Test
@@ -93,6 +95,7 @@ public class ProductoTest {
         producto.setDiametro(diametro);
         producto.setPrecio(precio);
         producto.setSoldOut(soldOut);
+        producto.setActivo(false);
         producto.setImagenes(imagenes);
 
 
@@ -107,6 +110,7 @@ public class ProductoTest {
         assertEquals(anchura, producto.getAnchura()); // Verifica que el ancho sea el esperado
         assertEquals(diametro, producto.getDiametro()); // Verifica que la profundidad sea la esperada
         assertTrue(producto.isSoldOut()); // Verifica que soldOut sea true
+        assertFalse(producto.isActivo()); // Verifica que el producto no esté activo
         assertNotNull(producto.getPrecio()); // Verifica que el precio no sea nulo
         assertEquals(precio, producto.getPrecio()); // Verifica que el precio sea el esperado
         assertNotNull(producto.getImagenes()); // Verifica que la lista de imágenes no sea nula

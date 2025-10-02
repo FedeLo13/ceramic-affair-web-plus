@@ -37,7 +37,7 @@ import es.uca.tfg.ceramic_affair_web.repositories.ProductoRepo;
  * Clase de prueba para el servicio ProductoService.
  * Proporciona pruebas de integración para las operaciones CRUD en la entidad Producto.
  * 
- * @version 1.1
+ * @version 1.2
  */
 @SpringBootTest
 @Transactional
@@ -359,8 +359,10 @@ public class ProductoServiceTest {
         // Eliminar el producto
         productoService.eliminarProducto(id);
 
-        // Verificar que el producto ha sido eliminado
-        assertThat(productoRepo.findById(id)).isEmpty();
+        // Verificar que el producto sigue existiendo pero está inactivo
+        assertThat(productoRepo.findById(id)).isPresent();
+        assertThat(productoRepo.findById(id).get().isActivo()).isFalse();
+        assertThat(productoRepo.findByIdAndActivoTrue(id)).isNotPresent();
     }
 
     @Test

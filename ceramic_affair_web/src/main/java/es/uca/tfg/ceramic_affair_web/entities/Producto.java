@@ -20,12 +20,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PreRemove;
 
 /**
  * Clase que representa un producto en el sistema
  * 
- * @version 1.1
+ * @version 1.2
  */
 
 @Entity
@@ -57,9 +56,12 @@ public class Producto {
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "producto_id")
     private List<Imagen> imagenes = new ArrayList<>();
+
+    @Column(nullable = false)
+    private boolean activo = true;
 
     /**
      * Constructor vacío para JPA
@@ -198,6 +200,15 @@ public class Producto {
     }
 
     /**
+     * Método para obtener si el producto está activo o no.
+     * 
+     * @return true si el producto está activo, false en caso contrario
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
      * Método para establecer el nombre del producto.
      * 
      * @param nombre el nuevo nombre del producto
@@ -288,6 +299,15 @@ public class Producto {
     }
 
     /**
+     * Método para establecer si el producto está activo o no.
+     * 
+     * @param activo true si el producto está activo, false en caso contrario
+     */
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    /**
      * Método para establecer la lista de imágenes del producto.
      * 
      * @param imagenes la nueva lista de imágenes del producto
@@ -296,17 +316,6 @@ public class Producto {
         this.imagenes.clear();
         if (imagenes != null) {
             this.imagenes.addAll(imagenes);
-        }
-    }
-
-    /**
-     * Método para eliminar el producto de la lista de productos de la categoría antes de ser eliminado.
-     */
-    @PreRemove
-    private void preRemove() {
-        if(this.categoria != null) {
-            this.categoria.getProductos().remove(this);
-            this.categoria = null;
         }
     }
 }

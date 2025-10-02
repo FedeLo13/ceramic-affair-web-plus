@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Clase de prueba para las especificaciones del repositorio Producto.
  * Proporciona pruebas de integración para las operaciones de búsqueda y filtrado en la entidad Producto.
  * 
- * @version 1.1
+ * @version 1.2
  */
 @DataJpaTest
 public class ProductoSpecificationsTest {
@@ -46,6 +46,7 @@ public class ProductoSpecificationsTest {
         producto1 = new Producto("Jarrón de barro", categoria1, "Un jarrón de barro hecho a mano", 0, 0, 0, BigDecimal.valueOf(12.99), false, null);
         producto2 = new Producto("Taza de cerámica", categoria2, "Una taza de cerámica pintada a mano", 0, 0, 0, BigDecimal.valueOf(5.49), false, null);
         producto3 = new Producto("Cuenco de cerámica", categoria1, "Un cuenco de cerámica esmaltado", 0, 0, 0, BigDecimal.valueOf(7.99), false, null);
+        producto3.setActivo(false); // Producto inactivo
         
         // Guardar categorías y productos en la base de datos
         entityManager.persist(categoria1);
@@ -72,6 +73,19 @@ public class ProductoSpecificationsTest {
         productoRepo.deleteAll();
     }
 
+
+    @Test
+    @DisplayName("Especificación - Filtrar activos")
+    void testFiltrarActivos() {
+        // Filtrar productos activos
+        Specification<Producto> spec = ProductoSpecifications.activos();
+        List<Producto> productos = productoRepo.findAll(spec);
+
+        // Verificar que solo se devuelven los productos activos
+        assertThat(productos).hasSize(2);
+        assertThat(productos.get(0).getNombre()).isEqualTo("Jarrón de barro");
+        assertThat(productos.get(1).getNombre()).isEqualTo("Taza de cerámica");
+    }
 
     @Test
     @DisplayName("Especificación - Filtrar por categoría")
