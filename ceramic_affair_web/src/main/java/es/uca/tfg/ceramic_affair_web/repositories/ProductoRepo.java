@@ -5,9 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.uca.tfg.ceramic_affair_web.entities.Producto;
+import jakarta.persistence.LockModeType;
 
 
 /**
@@ -32,4 +36,14 @@ public interface ProductoRepo extends JpaRepository<Producto, Long>, JpaSpecific
      * @return un Optional que contiene el producto si se encuentra y está activo, o vacío si no
      */
     Optional<Producto> findByIdAndActivoTrue(Long id);
+
+    /**
+     * Método para buscar y bloquear un producto por su ID.
+     * 
+     * @param id el ID del producto
+     * @return un Optional que contiene el producto si se encuentra, o vacío si no
+     */
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT p FROM Producto p WHERE p.id = :id")
+    Optional<Producto> findAndLockById(@Param("id") Long id);
 }

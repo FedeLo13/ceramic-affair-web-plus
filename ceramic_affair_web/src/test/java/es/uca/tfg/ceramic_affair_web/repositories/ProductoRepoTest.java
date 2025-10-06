@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import es.uca.tfg.ceramic_affair_web.entities.Categoria;
 import es.uca.tfg.ceramic_affair_web.entities.Producto;
+import jakarta.transaction.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -130,5 +131,30 @@ public class ProductoRepoTest {
         // Intentar buscar el producto inactivo por su ID
         Optional<Producto> encontradoInactivo = productoRepo.findByIdAndActivoTrue(producto2.getId());
         assertThat(encontradoInactivo).isNotPresent();
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Repositorio - findAndLockById aplica bloqueo pesimista sin errores")
+    void testFindAndLockById() {
+        // Crear y guardar un producto
+        Producto producto = new Producto("Taza bloqueable", null, "Taza de barro", 0, 0, 0, BigDecimal.valueOf(1.99), true, null);
+        productoRepo.saveAndFlush(producto);
+
+        // Llamar al método con bloqueo
+        Optional<Producto> bloqueado = productoRepo.findAndLockById(producto.getId());
+
+        // Verificar que se devuelve correctamente
+        assertThat(bloqueado).isPresent();
+        assertThat(bloqueado.get().getNombre()).isEqualTo("Taza bloqueable");
+
+        // Modificar el producto bloqueado (dentro de la misma transacción)
+        bloqueado.get().setDescripcion("Actualizado con lock");
+        productoRepo.saveAndFlush(bloqueado.get());
+
+        // Verificar que la actualización se aplicó correctamente
+        Optional<Producto> actualizado = productoRepo.findById(producto.getId());
+        assertThat(actualizado).isPresent();
+        assertThat(actualizado.get().getDescripcion()).isEqualTo("Actualizado con lock");
     }
 }
