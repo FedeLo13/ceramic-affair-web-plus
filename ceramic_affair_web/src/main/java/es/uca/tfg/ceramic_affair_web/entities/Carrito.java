@@ -3,6 +3,7 @@ package es.uca.tfg.ceramic_affair_web.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -79,7 +80,7 @@ public class Carrito {
      * @return la lista de ítems del carrito
      */
     public List<CarritoItem> getItems() {
-        return items;
+        return Collections.unmodifiableList(items);
     }
 
     /**
