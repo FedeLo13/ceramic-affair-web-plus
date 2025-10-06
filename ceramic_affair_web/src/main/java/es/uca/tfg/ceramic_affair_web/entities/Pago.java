@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +16,7 @@ import jakarta.persistence.OneToOne;
 /**
  * Clase que representa un pago.
  * 
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 public class Pago {
@@ -30,7 +29,8 @@ public class Pago {
     @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "pago", cascade = CascadeType.ALL, optional = false)
+    @OneToOne
+    @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
 
     private BigDecimal importe = BigDecimal.ZERO;
