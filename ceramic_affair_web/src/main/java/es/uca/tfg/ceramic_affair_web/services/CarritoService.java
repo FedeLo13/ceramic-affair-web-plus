@@ -147,7 +147,6 @@ public class CarritoService {
      */
     @Transactional
     public List<CarritoItemDTO> validarCarritoUsuario(Long usuarioId) {
-
         try {
             // 1. Buscar al usuario en la base de datos
             Usuario usuario = usuarioRepo.findById(usuarioId)
@@ -189,7 +188,7 @@ public class CarritoService {
      * @param items la lista de items del carrito del invitado
      * @return la lista de items que no son válidos (sin stock o desactivados)
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public List<CarritoItemDTO> validarCarritoInvitado(List<CarritoItemDTO> items) {
         try {
             if (items == null || items.isEmpty()) {
