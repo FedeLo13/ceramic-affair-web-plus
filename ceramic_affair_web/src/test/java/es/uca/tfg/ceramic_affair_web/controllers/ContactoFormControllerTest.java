@@ -30,6 +30,13 @@ import es.uca.tfg.ceramic_affair_web.security.JwtUtils;
 import es.uca.tfg.ceramic_affair_web.services.EmailService;
 import es.uca.tfg.ceramic_affair_web.services.RecaptchaService;
 
+/**
+ * Clase de prueba para el controlador de formulario de contacto.
+ * Proporciona purebas de capa web para las operaciones expuestas en el controlador de formulario de contacto,
+ * simulando peticiones HTTP sin interactuar con la base de datos.
+ * 
+ * @version 1.0
+ */
 @WebMvcTest(controllers = ContactoFormController.class)
 @AutoConfigureMockMvc
 public class ContactoFormControllerTest {
