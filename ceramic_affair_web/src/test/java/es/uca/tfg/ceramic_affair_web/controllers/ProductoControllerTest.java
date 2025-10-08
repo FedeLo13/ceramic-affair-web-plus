@@ -43,7 +43,7 @@ import es.uca.tfg.ceramic_affair_web.security.JwtUtils;
 import es.uca.tfg.ceramic_affair_web.services.ProductoService;
 
 /**
- * Clase de prueba para el controlador ProductoController.
+ * Clase de prueba para los controladores de productos.
  * Proporciona pruebas de capa web para las operaciones CRUD expuestas en el controlador,
  * simulando peticiones HTTP sin interactuar con la base de datos.
  * 
