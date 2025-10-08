@@ -32,7 +32,7 @@ import es.uca.tfg.ceramic_affair_web.services.PedidoService;
 
 /**
  * Clase de prueba para los controladores de pedidos.
- * Provide pruebas de capa web para las operaciones CRUD expuestas en los controladores de pedidos,
+ * Proporciona pruebas de capa web para las operaciones CRUD expuestas en los controladores de pedidos,
  * simulando peticiones HTTP sin interactuar con la base de datos.
  * 
  * @version 1.0
