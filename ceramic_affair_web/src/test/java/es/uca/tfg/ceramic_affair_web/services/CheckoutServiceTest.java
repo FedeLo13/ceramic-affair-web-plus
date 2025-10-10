@@ -19,7 +19,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import es.uca.tfg.ceramic_affair_web.DTOs.CarritoItemDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.CheckoutDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.CheckoutResponseDTO;
-import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDataDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.ProductoMapper;
 import es.uca.tfg.ceramic_affair_web.entities.Carrito;
 import es.uca.tfg.ceramic_affair_web.entities.CarritoItem;
@@ -107,7 +107,7 @@ public class CheckoutServiceTest {
         carritoRepo.save(carrito);
 
         // Crear el DTO de checkout
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -176,7 +176,7 @@ public class CheckoutServiceTest {
         productoRepo.save(producto2);
 
         // Crear el DTO de checkout
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -219,7 +219,7 @@ public class CheckoutServiceTest {
         carritoRepo.save(carrito);
 
         // Crear el DTO de checkout
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -257,7 +257,7 @@ public class CheckoutServiceTest {
         List<CarritoItemDTO> items = List.of(item1, item2);
 
         // Crear el DTO de checkout
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -318,7 +318,7 @@ public class CheckoutServiceTest {
         productoRepo.save(producto2);
 
         // Crear el DTO de checkout
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -361,7 +361,7 @@ public class CheckoutServiceTest {
         carritoRepo.save(carrito);
 
         // Crear el DTO de checkout
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
