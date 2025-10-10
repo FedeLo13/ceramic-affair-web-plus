@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { LoginDTO } from "../../types/login.types";
-import { login } from "../../api/login";
+import type { LoginDTO } from "../../types/auth-user.types";
+import { login } from "../../api/auth-user";
 import { useAuth } from "../../context/AuthContext";
 import "./AdminLogin.css"
 

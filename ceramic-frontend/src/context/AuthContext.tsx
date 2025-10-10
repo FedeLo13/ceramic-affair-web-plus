@@ -5,11 +5,15 @@ import { useNavigate } from "react-router-dom";
 interface jwtPayload {
     exp: number;
     sub: string;
+    userId: number;
+    roles: string[];
 }
 
 interface AuthContextProps {
     token: string | null;
     isAuthenticated: boolean;
+    roles: string[];
+    hasRole: (role: string) => boolean;
     login: (token: string) => void;
     logout: () => void;
 }
@@ -18,21 +22,27 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+    const [roles, setRoles] = useState<string[]>([]);
     const navigate = useNavigate();
 
     // Verificar expiración al cargar la aplicación
     useEffect(() => {
         if (token && isTokenExpired(token)) {
             handleLogout();
+        } else if (token) {
+            const decoded = jwtDecode<jwtPayload>(token);
+            setRoles(decoded.roles || []);
         }
     }, []);
 
     // Use effect para verificar el estado del token (temporal para desarrollo)
     useEffect(() => {
         if (token && !isTokenExpired(token)) {
-            console.log("✅ Admin logueado");
+            const decoded = jwtDecode<jwtPayload>(token);
+            console.log("✅ Usuario logueado:", decoded.sub);
+            console.log("🧩 Roles del usuario:", decoded.roles);
         } else {
-            console.log("❌ Admin no logueado");
+            console.log("❌ Usuario no logueado");
         }
     }, [token]);
 
@@ -40,17 +50,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setToken(newToken);
         localStorage.setItem("token", newToken);
         
+        const decoded = jwtDecode<jwtPayload>(newToken);
+        setRoles(decoded.roles || []);
+
         // Auto logout si el token expira
-        const { exp } = jwtDecode<jwtPayload>(newToken);
-        const expirationTime = exp * 1000 - Date.now();
+        const expirationTime = decoded.exp * 1000 - Date.now();
 
         setTimeout(() => {
+            console.log("⏰ Token expirado. Cerrando sesión automáticamente...");
             handleLogout();
         }, expirationTime);
     }
 
     const handleLogout = () => {
         setToken(null);
+        setRoles([]);
         localStorage.removeItem("token");
         navigate("/pieces"); // Redirigir a la página de piezas
     }
@@ -64,8 +78,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     };
 
+    const hasRole = (role: string): boolean => roles.includes(role);
+
     return (
-        <AuthContext.Provider value={{ token, isAuthenticated: !!token && !isTokenExpired(token), login: handleLogin, logout: handleLogout }}>
+        <AuthContext.Provider 
+            value={{ 
+                token, 
+                isAuthenticated: !!token && !isTokenExpired(token),
+                roles,
+                hasRole, 
+                login: handleLogin, 
+                logout: handleLogout 
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );
