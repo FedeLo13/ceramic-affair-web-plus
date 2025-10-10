@@ -1,6 +1,11 @@
 package es.uca.tfg.ceramic_affair_web.DTOs;
 
-import jakarta.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+import java.util.List;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 /**
  * DTO para la entidad Pedido.
@@ -10,83 +15,70 @@ import jakarta.validation.constraints.NotBlank;
  */
 public class PedidoDTO {
 
-    @NotBlank(message = "El nombre del cliente es obligatorio")
-    private String nombreCliente;
+    private Long id;
 
-    @NotBlank(message = "Los apellidos del cliente son obligatorios")
-    private String apellidosCliente;
+    @NotNull(message = "La lista de ítems no puede ser nula")
+    @NotEmpty(message = "El pedido no puede estar vacío")
+    private List<PedidoItemDTO> items;
 
-    @NotBlank(message = "El email del cliente es obligatorio")
-    private String emailCliente;
+    @NotNull(message = "El total no puede ser nulo")
+    @PositiveOrZero(message = "El total no puede ser negativo")
+    private BigDecimal total;
 
-    @NotBlank(message = "La provincia es obligatoria")
-    private String provincia;
+    @NotNull(message = "Los datos del pedido son obligatorios")
+    private PedidoDataDTO pedido;
 
-    @NotBlank(message = "La ciudad es obligatoria")
-    private String ciudad;
-
-    @NotBlank(message = "El código postal es obligatorio")
-    private String codigoPostal;
-
-    @NotBlank(message = "La dirección es obligatoria")
-    private String direccion;
+    @NotNull(message = "El estado de envío es obligatorio")
+    private Boolean enviado;
 
     public PedidoDTO() {
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
+    public PedidoDTO(Long id, List<PedidoItemDTO> items, BigDecimal total, PedidoDataDTO pedido, Boolean enviado) {
+        this.id = id;
+        this.items = items;
+        this.total = total;
+        this.pedido = pedido;
+        this.enviado = enviado;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+    public Long getId() {
+        return id;
     }
 
-    public String getApellidosCliente() {
-        return apellidosCliente;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setApellidosCliente(String apellidosCliente) {
-        this.apellidosCliente = apellidosCliente;
+    public List<PedidoItemDTO> getItems() {
+        return items;
     }
 
-    public String getEmailCliente() {
-        return emailCliente;
+    public void setItems(List<PedidoItemDTO> items) {
+        this.items = items;
     }
 
-    public void setEmailCliente(String emailCliente) {
-        this.emailCliente = emailCliente;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public String getProvincia() {
-        return provincia;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
+    public PedidoDataDTO getPedido() {
+        return pedido;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public void setPedido(PedidoDataDTO pedido) {
+        this.pedido = pedido;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public Boolean getEnviado() {
+        return enviado;
     }
 
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setEnviado(Boolean enviado) {
+        this.enviado = enviado;
     }
 }

@@ -1,6 +1,7 @@
 package es.uca.tfg.ceramic_affair_web.controllers.admin;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoMapper;
 import es.uca.tfg.ceramic_affair_web.entities.Pedido;
 import es.uca.tfg.ceramic_affair_web.payload.ApiResponseType;
 import es.uca.tfg.ceramic_affair_web.services.PedidoService;
@@ -39,9 +42,12 @@ public class PedidoAdminController {
         @ApiResponse(responseCode = "200", description = "Lista de pedidos obtenida con éxito"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    public ResponseEntity<ApiResponseType<List<Pedido>>> listarPedidos() {
+    public ResponseEntity<ApiResponseType<List<PedidoDTO>>> listarPedidos() {
         List<Pedido> pedidos = pedidoService.getAllPedidos();
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pedidos obtenida con éxito", pedidos));
+        List<PedidoDTO> pedidosDTO = pedidos.stream()
+                .map(PedidoMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pedidos obtenida con éxito", pedidosDTO));
     }
 
     @GetMapping("/enviados")
@@ -50,9 +56,12 @@ public class PedidoAdminController {
         @ApiResponse(responseCode = "200", description = "Lista de pedidos enviados obtenida con éxito"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    public ResponseEntity<ApiResponseType<List<Pedido>>> listarPedidosEnviados() {
+    public ResponseEntity<ApiResponseType<List<PedidoDTO>>> listarPedidosEnviados() {
         List<Pedido> pedidos = pedidoService.getPedidosEnviados();
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pedidos enviados obtenida con éxito", pedidos));
+        List<PedidoDTO> pedidosDTO = pedidos.stream()
+                .map(PedidoMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pedidos enviados obtenida con éxito", pedidosDTO));
     }
 
     @GetMapping("/no-enviados")
@@ -61,9 +70,12 @@ public class PedidoAdminController {
         @ApiResponse(responseCode = "200", description = "Lista de pedidos no enviados obtenida con éxito"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    public ResponseEntity<ApiResponseType<List<Pedido>>> listarPedidosNoEnviados() {
+    public ResponseEntity<ApiResponseType<List<PedidoDTO>>> listarPedidosNoEnviados() {
         List<Pedido> pedidos = pedidoService.getPedidosNoEnviados();
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pedidos no enviados obtenida con éxito", pedidos));
+        List<PedidoDTO> pedidosDTO = pedidos.stream()
+                .map(PedidoMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pedidos no enviados obtenida con éxito", pedidosDTO));
     }
 
     @PatchMapping("/{id}/enviado")

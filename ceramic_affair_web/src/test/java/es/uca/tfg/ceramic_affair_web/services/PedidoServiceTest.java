@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import es.uca.tfg.ceramic_affair_web.DTOs.CarritoItemDTO;
-import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDataDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.ProductoDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.ProductoMapper;
 import es.uca.tfg.ceramic_affair_web.entities.Carrito;
@@ -260,7 +260,7 @@ public class PedidoServiceTest {
         Carrito carrito = new Carrito(usuario);
         carritoRepo.save(carrito);
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Nombre");
         pedidoDTO.setApellidosCliente("Apellidos");
         pedidoDTO.setEmailCliente("cliente@example.com");
@@ -292,7 +292,7 @@ public class PedidoServiceTest {
     @DisplayName("Servicio - Crear pedido para usuario inexistente")
     public void testCreatePedidoUsuarioNoExistente() {
         assertThrows(AuthException.UsuarioNoEncontrado.class, () -> {
-            PedidoDTO pedidoDTO = new PedidoDTO();
+            PedidoDataDTO pedidoDTO = new PedidoDataDTO();
             pedidoDTO.setNombreCliente("Nombre");
             pedidoDTO.setApellidosCliente("Apellidos");
             pedidoDTO.setEmailCliente("cliente@example.com");
@@ -320,7 +320,7 @@ public class PedidoServiceTest {
         CarritoItemDTO item1 = new CarritoItemDTO(productoDTO1, producto1.getPrecio());
         CarritoItemDTO item2 = new CarritoItemDTO(productoDTO2, producto2.getPrecio());
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Nombre");
         pedidoDTO.setApellidosCliente("Apellidos");
         pedidoDTO.setEmailCliente("cliente@example.com");
@@ -368,7 +368,7 @@ public class PedidoServiceTest {
         CarritoItemDTO item1 = new CarritoItemDTO(productoDTO1, producto1.getPrecio());
         CarritoItemDTO item2 = new CarritoItemDTO(productoDTO2, new BigDecimal("20.00"));
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Nombre");
         pedidoDTO.setApellidosCliente("Apellidos");
         pedidoDTO.setEmailCliente("cliente@example.com");

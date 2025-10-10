@@ -1,6 +1,7 @@
 package es.uca.tfg.ceramic_affair_web.controllers.user;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoMapper;
 import es.uca.tfg.ceramic_affair_web.entities.Pedido;
 import es.uca.tfg.ceramic_affair_web.payload.ApiResponseType;
 import es.uca.tfg.ceramic_affair_web.services.PedidoService;
@@ -38,8 +41,11 @@ public class PedidoUserController {
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    private ResponseEntity<ApiResponseType<List<Pedido>>> listarPedidosUsuario(@RequestParam Long usuarioId) {
+    private ResponseEntity<ApiResponseType<List<PedidoDTO>>> listarPedidosUsuario(@RequestParam Long usuarioId) {
         List<Pedido> pedidos = pedidoService.getPedidosByUsuarioId(usuarioId);
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Pedidos obtenidos exitosamente", pedidos));
+        List<PedidoDTO> pedidosDTO = pedidos.stream()
+                .map(PedidoMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Pedidos obtenidos exitosamente", pedidosDTO));
     }
 }

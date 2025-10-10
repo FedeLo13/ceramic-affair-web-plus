@@ -77,13 +77,13 @@ public class PedidoControllerTest {
         .andExpect(jsonPath("$.success").value(true))
         .andExpect(jsonPath("$.message").value("Pedido encontrado"))
         .andExpect(jsonPath("$.data.id").value(1))
-        .andExpect(jsonPath("$.data.nombreCliente").value("Manola"))
-        .andExpect(jsonPath("$.data.apellidosCliente").value("García"))
-        .andExpect(jsonPath("$.data.emailCliente").value("manola.garcia@example.com"))
-        .andExpect(jsonPath("$.data.provinciaEnvio").value("Soria"))
-        .andExpect(jsonPath("$.data.ciudadEnvio").value("Soria"))
-        .andExpect(jsonPath("$.data.codigoPostalEnvio").value("12345"))
-        .andExpect(jsonPath("$.data.direccionEnvio").value("Calle Falsa 123"));
+        .andExpect(jsonPath("$.data.pedido.nombreCliente").value("Manola"))
+        .andExpect(jsonPath("$.data.pedido.apellidosCliente").value("García"))
+        .andExpect(jsonPath("$.data.pedido.emailCliente").value("manola.garcia@example.com"))
+        .andExpect(jsonPath("$.data.pedido.provincia").value("Soria"))
+        .andExpect(jsonPath("$.data.pedido.ciudad").value("Soria"))
+        .andExpect(jsonPath("$.data.pedido.codigoPostal").value("12345"))
+        .andExpect(jsonPath("$.data.pedido.direccion").value("Calle Falsa 123"));
     }
 
     @Test
@@ -141,9 +141,9 @@ public class PedidoControllerTest {
             .andExpect(jsonPath("$.message").value("Pedidos obtenidos exitosamente"))
             .andExpect(jsonPath("$.data").isArray())
             .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].nombreCliente").value("Manola"))
+            .andExpect(jsonPath("$.data[0].pedido.nombreCliente").value("Manola"))
             .andExpect(jsonPath("$.data[1].id").value(2))
-            .andExpect(jsonPath("$.data[1].nombreCliente").value("Juan"));
+            .andExpect(jsonPath("$.data[1].pedido.nombreCliente").value("Juan"));
     }
 
     @Test
@@ -199,10 +199,10 @@ public class PedidoControllerTest {
             .andExpect(jsonPath("$.message").value("Lista de pedidos obtenida con éxito"))
             .andExpect(jsonPath("$.data").isArray())
             .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].nombreCliente").value("Manola"))
+            .andExpect(jsonPath("$.data[0].pedido.nombreCliente").value("Manola"))
             .andExpect(jsonPath("$.data[0].enviado").value(true))
             .andExpect(jsonPath("$.data[1].id").value(2))
-            .andExpect(jsonPath("$.data[1].nombreCliente").value("Juan"))
+            .andExpect(jsonPath("$.data[1].pedido.nombreCliente").value("Juan"))
             .andExpect(jsonPath("$.data[1].enviado").value(false));
     }
 
@@ -244,10 +244,10 @@ public class PedidoControllerTest {
             .andExpect(jsonPath("$.message").value("Lista de pedidos enviados obtenida con éxito"))
             .andExpect(jsonPath("$.data").isArray())
             .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].nombreCliente").value("Manola"))
+            .andExpect(jsonPath("$.data[0].pedido.nombreCliente").value("Manola"))
             .andExpect(jsonPath("$.data[0].enviado").value(true))
             .andExpect(jsonPath("$.data[1].id").value(2))
-            .andExpect(jsonPath("$.data[1].nombreCliente").value("Juan"))
+            .andExpect(jsonPath("$.data[1].pedido.nombreCliente").value("Juan"))
             .andExpect(jsonPath("$.data[1].enviado").value(true));
     }
 
@@ -289,10 +289,10 @@ public class PedidoControllerTest {
             .andExpect(jsonPath("$.message").value("Lista de pedidos no enviados obtenida con éxito"))
             .andExpect(jsonPath("$.data").isArray())
             .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].nombreCliente").value("Manola"))
+            .andExpect(jsonPath("$.data[0].pedido.nombreCliente").value("Manola"))
             .andExpect(jsonPath("$.data[0].enviado").value(false))
             .andExpect(jsonPath("$.data[1].id").value(2))
-            .andExpect(jsonPath("$.data[1].nombreCliente").value("Juan"))
+            .andExpect(jsonPath("$.data[1].pedido.nombreCliente").value("Juan"))
             .andExpect(jsonPath("$.data[1].enviado").value(false));
     }
 

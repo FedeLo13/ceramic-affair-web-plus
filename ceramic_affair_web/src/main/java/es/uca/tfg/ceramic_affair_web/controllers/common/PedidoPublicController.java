@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoMapper;
 import es.uca.tfg.ceramic_affair_web.entities.Pedido;
 import es.uca.tfg.ceramic_affair_web.payload.ApiResponseType;
 import es.uca.tfg.ceramic_affair_web.services.PedidoService;
@@ -36,8 +38,9 @@ public class PedidoPublicController {
         @ApiResponse(responseCode = "404", description = "Pedido no encontrado"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    public ResponseEntity<ApiResponseType<Pedido>> obtenerPedido(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseType<PedidoDTO>> obtenerPedido(@PathVariable Long id) {
         Pedido pedido = pedidoService.getPedidoById(id);
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Pedido encontrado", pedido));
+        PedidoDTO pedidoDTO = PedidoMapper.toDTO(pedido);
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Pedido encontrado", pedidoDTO));
     }
 }
