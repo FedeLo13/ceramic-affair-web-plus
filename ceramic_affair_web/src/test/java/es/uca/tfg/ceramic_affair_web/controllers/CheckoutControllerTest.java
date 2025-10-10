@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.uca.tfg.ceramic_affair_web.DTOs.CheckoutDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.CheckoutResponseDTO;
-import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDataDTO;
 import es.uca.tfg.ceramic_affair_web.controllers.common.CheckoutController;
 import es.uca.tfg.ceramic_affair_web.entities.Pedido;
 import es.uca.tfg.ceramic_affair_web.entities.TipoPago;
@@ -67,7 +67,7 @@ public class CheckoutControllerTest {
         usuario.setId(1L);
 
         // Crear DTO de checkout simulado
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -118,7 +118,7 @@ public class CheckoutControllerTest {
         usuario.setId(1L);
 
         // Crear DTO de checkout simulado
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -150,7 +150,7 @@ public class CheckoutControllerTest {
     @DisplayName("Controlador - Procesar checkout con usuario no encontrado")
     public void testProcesarCheckoutUserNotFound() throws Exception {
         // Crear DTO de checkout simulado
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");
@@ -186,7 +186,7 @@ public class CheckoutControllerTest {
         usuario.setId(1L);
 
         // Crear DTO de checkout simulado
-        PedidoDTO pedidoDTO = new PedidoDTO();
+        PedidoDataDTO pedidoDTO = new PedidoDataDTO();
         pedidoDTO.setNombreCliente("Test");
         pedidoDTO.setApellidosCliente("User");
         pedidoDTO.setEmailCliente("testuser@example.com");

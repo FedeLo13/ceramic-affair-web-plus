@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.uca.tfg.ceramic_affair_web.DTOs.CarritoItemDTO;
-import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDTO;
+import es.uca.tfg.ceramic_affair_web.DTOs.PedidoDataDTO;
 import es.uca.tfg.ceramic_affair_web.entities.Carrito;
 import es.uca.tfg.ceramic_affair_web.entities.Pedido;
 import es.uca.tfg.ceramic_affair_web.entities.PedidoItem;
@@ -99,7 +99,7 @@ public class PedidoService {
      * @return el pedido creado
      * @throws AuthException.UsuarioNoEncontrado si el usuario no existe
      */
-    public Pedido createPedidoUsuario(Long usuarioId, PedidoDTO pedido) {
+    public Pedido createPedidoUsuario(Long usuarioId, PedidoDataDTO pedido) {
         Carrito carrito = carritoService.getCarrito(usuarioId).get();
 
         Pedido nuevoPedido = new Pedido(
@@ -124,7 +124,7 @@ public class PedidoService {
      * @return el pedido creado
      * @throws ProductoException.NoEncontrado si algún producto no existe
      */
-    public Pedido createPedidoInvitado(List<CarritoItemDTO> items, PedidoDTO pedido) {
+    public Pedido createPedidoInvitado(List<CarritoItemDTO> items, PedidoDataDTO pedido) {
         // Crear pedido vacío con los datos del cliente
         Pedido nuevoPedido = new Pedido(
             pedido.getNombreCliente(),

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.uca.tfg.ceramic_affair_web.DTOs.PagoDTO;
 import es.uca.tfg.ceramic_affair_web.entities.Pago;
 import es.uca.tfg.ceramic_affair_web.payload.ApiResponseType;
 import es.uca.tfg.ceramic_affair_web.services.PagoService;
@@ -37,8 +38,11 @@ public class PagoUserController {
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    public ResponseEntity<ApiResponseType<List<Pago>>> getPagosByUsuario(@PathVariable Long userId) {
+    public ResponseEntity<ApiResponseType<List<PagoDTO>>> getPagosByUsuario(@PathVariable Long userId) {
         List<Pago> pagos = pagoService.getPagosByUsuarioId(userId);
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pagos obtenida", pagos));
+        List<PagoDTO> pagosDTO = pagos.stream()
+            .map(pago -> new PagoDTO(pago.getId(), pago.getUsuario() != null ? pago.getUsuario().getId() : null, pago.getPedido() != null ? pago.getPedido().getId() : null, pago.getImporte(), pago.getTipoPago()))
+            .toList();
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Lista de pagos obtenida", pagosDTO));
     }
 }

@@ -88,7 +88,7 @@ public class PagoControllerTest {
             .andExpect(jsonPath("$.data.id").value(1))
             .andExpect(jsonPath("$.data.importe").value(150.75))
             .andExpect(jsonPath("$.data.tipoPago").value("TARJETA"))
-            .andExpect(jsonPath("$.data.pedido.id").value(1));
+            .andExpect(jsonPath("$.data.pedidoId").value(1));
     }
 
     @Test
@@ -160,8 +160,8 @@ public class PagoControllerTest {
             .andExpect(jsonPath("$.data[0].id").value(1))
             .andExpect(jsonPath("$.data[0].importe").value(150.75))
             .andExpect(jsonPath("$.data[0].tipoPago").value("TARJETA"))
-            .andExpect(jsonPath("$.data[0].usuario.id").value(1))
-            .andExpect(jsonPath("$.data[0].pedido.id").value(1));
+            .andExpect(jsonPath("$.data[0].usuarioId").value(1))
+            .andExpect(jsonPath("$.data[0].pedidoId").value(1));
     }
 
     @Test

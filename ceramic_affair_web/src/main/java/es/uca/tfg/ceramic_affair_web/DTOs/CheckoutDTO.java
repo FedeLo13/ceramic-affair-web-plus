@@ -25,7 +25,7 @@ public class CheckoutDTO {
     private TipoPago tipoPago;
 
     @NotNull(message = "Los datos del pedido son obligatorios")
-    private PedidoDTO pedido;
+    private PedidoDataDTO pedido;
 
     public CheckoutDTO() {
     }
@@ -62,11 +62,11 @@ public class CheckoutDTO {
         this.tipoPago = tipoPago;
     }
 
-    public PedidoDTO getPedido() {
+    public PedidoDataDTO getPedido() {
         return pedido;
     }
 
-    public void setPedido(PedidoDTO pedido) {
+    public void setPedido(PedidoDataDTO pedido) {
         this.pedido = pedido;
     }
 }

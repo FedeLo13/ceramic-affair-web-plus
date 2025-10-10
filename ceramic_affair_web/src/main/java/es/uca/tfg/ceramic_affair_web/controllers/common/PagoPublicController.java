@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.uca.tfg.ceramic_affair_web.DTOs.PagoDTO;
 import es.uca.tfg.ceramic_affair_web.entities.Pago;
 import es.uca.tfg.ceramic_affair_web.payload.ApiResponseType;
 import es.uca.tfg.ceramic_affair_web.services.PagoService;
@@ -36,8 +37,9 @@ public class PagoPublicController {
         @ApiResponse(responseCode = "404", description = "Pedido no encontrado o Pago no encontrado"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    public ResponseEntity<ApiResponseType<Pago>> obtenerPagoPorPedido(@PathVariable Long pedidoId) {
+    public ResponseEntity<ApiResponseType<PagoDTO>> obtenerPagoPorPedido(@PathVariable Long pedidoId) {
         Pago pago = pagoService.getPagoByPedidoId(pedidoId);
-        return ResponseEntity.ok(new ApiResponseType<>(true, "Pago encontrado", pago));
+        PagoDTO pagoDTO = new PagoDTO(pago.getId(), pago.getUsuario() != null ? pago.getUsuario().getId() : null, pago.getPedido() != null ? pago.getPedido().getId() : null, pago.getImporte(), pago.getTipoPago());
+        return ResponseEntity.ok(new ApiResponseType<>(true, "Pago encontrado", pagoDTO));
     }
 }
