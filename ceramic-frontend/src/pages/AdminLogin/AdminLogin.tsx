@@ -1,19 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { LoginDTO } from "../../types/auth-user.types";
-import { login } from "../../api/auth-user";
+import { loginAdmin } from "../../api/auth-user";
 import { useAuth } from "../../context/AuthContext";
 import "./AdminLogin.css"
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 export default function AdminLogin() {
     const { login: doLogin} = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        if(!executeRecaptcha) {
+            console.error('Recaptcha not executed');
+            return;
+        }
+
+        const recaptchaToken = await executeRecaptcha('adminLogin');
 
         const trimmedEmail = email.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
@@ -22,7 +31,7 @@ export default function AdminLogin() {
         }
 
         try {
-            const res = await login({ email, password } as LoginDTO);
+            const res = await loginAdmin({ email, password, recaptchaToken } as LoginDTO);
             doLogin(res.token);
             navigate("/pieces"); // Redirigir a la página de piezas después del login exitoso
         } catch {

@@ -20,6 +20,8 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
+export let globalLogout: (() => void) | null = null;
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
     const [roles, setRoles] = useState<string[]>([]);
@@ -68,6 +70,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.removeItem("token");
         navigate("/pieces"); // Redirigir a la página de piezas
     }
+
+    useEffect(() => {
+        globalLogout = handleLogout;
+        return () => { globalLogout = null; };
+    } , []);
 
     const isTokenExpired = (token: string): boolean => {
         try {

@@ -35,7 +35,11 @@ function App() {
         <Route path="privacy-policy" element={<PoliticaPrivacidad />} />
         
         {/* Rutas de administración */}
-        <Route path="admin-login" element={<AdminLogin />} />
+        <Route path="admin-login" element={
+          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+            <AdminLogin />
+          </GoogleReCaptchaProvider>
+        } />
         <Route path="confirmation" element={<Confirmacion />} />
         {/* Rutas protegidas para administración */}
         <Route path="admin/products/new" element={

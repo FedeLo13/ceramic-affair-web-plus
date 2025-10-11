@@ -2,6 +2,7 @@
 
 import type { ApiError } from "./api.error";
 import type { ApiResponse } from "./api.response";
+import { globalLogout } from "../context/AuthContext";
 
 export class ValidationError extends Error {
     public validationErrors: Record<string, string>;
@@ -21,7 +22,16 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
         'Authorization': token ? `Bearer ${token}` : '',
     };
 
-    return fetch(url, { ...options, headers });
+    const response = await fetch(url, { ...options, headers });
+
+    // Si la respuesta es 401 Unauthorized, forzamos el logout globalmente
+    if (response.status === 401) {
+        console.warn("🔒 Sesión expirada o no autorizada. Cerrando sesión...");
+        globalLogout?.();
+        return Promise.reject(new Error('Unauthorized'));
+    }
+
+    return response;
 }
 
 export const handleFetch = async <T>(response: Response, errorPrefix = 'Error'): Promise<T> => {
