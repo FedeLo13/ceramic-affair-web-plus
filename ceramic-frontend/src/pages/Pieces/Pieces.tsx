@@ -26,7 +26,7 @@ export default function Pieces({ showFilters: defaultShowFilters = true }: Piece
     const [loading, setLoading] = useState(false); // Estado de carga
     const [isFetching, setIsFetching] = useState(false); // Estado para el lazy loading
     const [adminDropdownOpen, setAdminDropdownOpen] = useState(false); // Estado para el menú de administrador
-    const { isAuthenticated } = useAuth(); // Hook de autenticación
+    const { hasRole } = useAuth(); // Hook de autenticación
 
     // Estado para los filtros
     const [nombre, setNombre] = useState(""); // Estado para el filtro de búsqueda por nombre
@@ -286,8 +286,8 @@ export default function Pieces({ showFilters: defaultShowFilters = true }: Piece
                         </select>
                     </div>
 
-                    {/* Admin Dropdown (solo visible si está logueado) */}
-                    {isAuthenticated && (
+                    {/* Admin Dropdown (solo visible si tiene rol de admin) */}
+                    {hasRole("ADMIN") && (
                         <div className="admin-menu">
                             <button
                                 className="admin-toggle" 

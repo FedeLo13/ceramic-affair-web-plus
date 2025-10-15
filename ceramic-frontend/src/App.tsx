@@ -8,7 +8,7 @@ import FindMe from "./pages/FindMe/FindMe";
 import AdminLogin from "./pages/Login/AdminLogin";
 import AdminProductNew from "./pages/Admin/AdminProductNew";
 import AdminProductEdit from "./pages/Admin/AdminProductEdit";
-import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
+import AdminRoute from "./components/ProtectedRoutes/AdminRoute";
 import AdminManageCategories from "./pages/Admin/AdminManageCategories";
 import Confirmacion from "./pages/Confirmation/Confirmation";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
@@ -54,29 +54,29 @@ function App() {
         <Route path="confirmation" element={<Confirmacion />} />
         {/* Rutas protegidas para administración */}
         <Route path="admin/products/new" element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminProductNew />
-          </ProtectedRoute>
+          </AdminRoute>
         } />
         <Route path="admin/find-me/new" element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminFindMeNew />
-          </ProtectedRoute>
+          </AdminRoute>
         } />
         <Route path="admin/products/edit/:id" element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminProductEdit />
-          </ProtectedRoute>
+          </AdminRoute>
         } />
         <Route path="admin/find-me/edit/:id" element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminFindMeEdit />
-          </ProtectedRoute>
+          </AdminRoute>
         } />
         <Route path="admin/categories" element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminManageCategories />
-          </ProtectedRoute>
+          </AdminRoute>
         } />
       </Route>
     </Routes>

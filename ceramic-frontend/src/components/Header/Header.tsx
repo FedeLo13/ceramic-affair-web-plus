@@ -9,7 +9,7 @@ export default function Header() {
     const [adminMenuOpen, setAdminMenuOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const userDropdownRef = useRef<HTMLDivElement | null>(null);
-    const { isAuthenticated, logout } = useAuth();
+    const { hasRole, logout } = useAuth();
 
     useEffect(() => {
         if (sidebarOpen) {
@@ -79,8 +79,8 @@ export default function Header() {
                         <FaInstagram size={24} />
                     </a>
 
-                    {/* Admin Menu (solo visible si está logueado) */}
-                    {isAuthenticated && (
+                    {/* Admin Menu (solo visible si tiene rol ADMIN) */}
+                    {hasRole("ADMIN") && (
                         <div className="admin-menu">
                             <button
                                 className="admin-toggle" 

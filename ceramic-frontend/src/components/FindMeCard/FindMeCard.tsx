@@ -68,7 +68,7 @@ function formatLocal(dateStr: string) {
 
 export default function FindMeCard({ post }: FindMeCardProps) {
   const { titulo, descripcion, fechaInicio, fechaFin, latitud, longitud } = post;
-  const { isAuthenticated } = useAuth(); // Hook de autenticación
+  const { hasRole } = useAuth(); // Hook de autenticación
   const navigate = useNavigate();
 
   // Convertir fechas a objetos Date
@@ -126,7 +126,7 @@ export default function FindMeCard({ post }: FindMeCardProps) {
             <br />
           </div>
           <div className="findme-card-footer">
-            {isAuthenticated && (
+            {hasRole("ADMIN") && (
               <div className="findme-admin-actions">
                 <button onClick={handleEdit} className="findme-admin-button findme-admin-button-edit">
                   <FaEdit /> Edit

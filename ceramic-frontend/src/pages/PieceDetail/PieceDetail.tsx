@@ -21,7 +21,7 @@ export default function PieceDetail() {
     const [imagenes, setImagenes] = useState<Imagen[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const { isAuthenticated } = useAuth(); // Hook de autenticación
+    const { hasRole } = useAuth(); // Hook de autenticación
     const [isMobile, setIsMobile] = useState(false);
     const [showDeleteMessage, setShowDeleteMessage] = useState(false);
 
@@ -244,7 +244,7 @@ export default function PieceDetail() {
                     )}
 
                     {/* Botón de editar (solo para administradores) */}
-                    {isAuthenticated && (
+                    {hasRole("ADMIN") && (
                         <div className="admin-actions">
                             <button 
                                 className="edit-button"
