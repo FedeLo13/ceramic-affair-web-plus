@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { LoginDTO } from "../../types/auth-user.types";
-import { loginAdmin } from "../../api/auth-user";
 import { useAuth } from "../../context/AuthContext";
-import "./AdminLogin.css"
+import "./LoginForm.css";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-export default function AdminLogin() {
-    const { login: doLogin} = useAuth();
+interface LoginFormProps {
+  onSubmit: (data: LoginDTO & { recaptchaToken: string }) => Promise<{ token: string }>;
+  redirectTo: string;
+}
+
+export default function LoginForm({ onSubmit, redirectTo }: LoginFormProps) {
+    const { login: doLogin } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -16,13 +20,14 @@ export default function AdminLogin() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setError("");
 
         if(!executeRecaptcha) {
             console.error('Recaptcha not executed');
             return;
         }
 
-        const recaptchaToken = await executeRecaptcha('adminLogin');
+        const recaptchaToken = await executeRecaptcha('login');
 
         const trimmedEmail = email.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
@@ -31,17 +36,17 @@ export default function AdminLogin() {
         }
 
         try {
-            const res = await loginAdmin({ email, password, recaptchaToken } as LoginDTO);
+            const res = await onSubmit({ email: trimmedEmail, password, recaptchaToken });
             doLogin(res.token);
-            navigate("/pieces"); // Redirigir a la página de piezas después del login exitoso
+            navigate(redirectTo);
         } catch {
             setError("Invalid email or password. Please try again.");
         }
     };
 
     return (
-        <div className="admin-login">
-            <form className="admin-login-form" onSubmit={handleSubmit}>
+        <div className="login">
+            <form className="login-form" onSubmit={handleSubmit}>
                 <div className="login-form-group">
                     <label htmlFor="email" className="login-label">Email</label>
                     <input 

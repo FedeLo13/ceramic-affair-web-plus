@@ -213,3 +213,81 @@ header nav a:hover {
   overflow: hidden;
   height: 100%;
 }
+
+.user-dropdown {
+  position: fixed;
+  top: 16px;       /* ajusta si tu header tiene más o menos altura */
+  right: 20px;
+  z-index: 200;    /* más alto que el header y el sidebar */
+}
+
+.user-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2B3A64;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  z-index: 300;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilo base para enlaces dentro del dropdown */
+.user-login-link {
+  display: block;
+  text-decoration: none;
+  color: #2B3A64;
+  background: none;
+  border: none;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+/* Quita color azul y subrayado de NavLink */
+.user-login-link:link,
+.user-login-link:visited {
+  color: #2B3A64;
+  text-decoration: none;
+}
+
+/* Hover */
+.user-login-link:hover {
+  background-color: #f2f2f2;
+}
+
+/* Botones del dropdown */
+.user-dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    color: #2B3A64;
+    transition: background-color 0.2s;
+}
+
+.user-dropdown-menu button:hover {
+    background-color: #f2f2f2;
+}

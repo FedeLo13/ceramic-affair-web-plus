@@ -1,5 +1,5 @@
 /* Contenedor general */
-.admin-login {
+.login {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -8,7 +8,7 @@
 }
 
 /* Caja del formulario */
-.admin-login-form {
+.login-form {
   background: #FAFAFA;
   padding: 2.5rem;
   border-radius: 4px;

@@ -5,7 +5,7 @@ import Pieces from "./pages/Pieces/Pieces";
 import PieceDetail from "./pages/PieceDetail/PieceDetail";
 import Contact from "./pages/Contact/Contact";
 import FindMe from "./pages/FindMe/FindMe";
-import AdminLogin from "./pages/AdminLogin/AdminLogin";
+import AdminLogin from "./pages/Login/AdminLogin";
 import AdminProductNew from "./pages/Admin/AdminProductNew";
 import AdminProductEdit from "./pages/Admin/AdminProductEdit";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
@@ -15,6 +15,8 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import AdminFindMeEdit from "./pages/Admin/AdminFindMeEdit";
 import AdminFindMeNew from "./pages/Admin/AdminFindMeNew";
 import PoliticaPrivacidad from "./pages/PolíticaPrivacidad/PrivacyPolicy";
+import UserLogin from "./pages/Login/UserLogin";
+import UserRegister from "./pages/Register/UserRegister";
 
 function App() {
   return (
@@ -33,7 +35,16 @@ function App() {
         } />
         <Route path="find-me" element={<FindMe />} />
         <Route path="privacy-policy" element={<PoliticaPrivacidad />} />
-        
+        <Route path="user-register" element={
+          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+            <UserRegister />
+          </GoogleReCaptchaProvider>
+        } />
+        <Route path="user-login" element={
+          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+            <UserLogin />
+          </GoogleReCaptchaProvider>
+        } />
         {/* Rutas de administración */}
         <Route path="admin-login" element={
           <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>

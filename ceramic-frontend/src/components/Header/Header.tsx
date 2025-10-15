@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaInstagram, FaBars, FaCrown } from "react-icons/fa";
+import { FaInstagram, FaBars, FaCrown, FaUserCircle } from "react-icons/fa";
 import "./Header.css";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [adminMenuOpen, setAdminMenuOpen] = useState(false);
+    const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+    const userDropdownRef = useRef<HTMLDivElement | null>(null);
     const { isAuthenticated, logout } = useAuth();
 
     useEffect(() => {
@@ -16,6 +18,26 @@ export default function Header() {
             document.body.classList.remove("no-scroll");
         }
     }, [sidebarOpen]);
+
+    // 🔹 Cerrar el dropdown al hacer clic fuera
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                userDropdownRef.current &&
+                !userDropdownRef.current.contains(event.target as Node)
+            ) {
+                setUserDropdownOpen(false);
+            }
+        };
+
+        if (userDropdownOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [userDropdownOpen]);
 
     return (
         <>
@@ -85,6 +107,35 @@ export default function Header() {
             <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
                 <FaBars size={24} />
             </button>
+
+            {/* User Dropdown */}
+            <div className="user-dropdown" ref={userDropdownRef}>
+                <button 
+                    className="user-toggle"
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                >
+                    <FaUserCircle size={40} />
+                </button>
+
+                {userDropdownOpen && (
+                    <div className="user-dropdown-menu">
+                        <NavLink 
+                            to="/user-login"
+                            className="user-login-link" 
+                            onClick={() => setUserDropdownOpen(false)}
+                        >
+                            Login
+                        </NavLink>
+                        <NavLink 
+                            to="/user-register"
+                            className="user-login-link" 
+                            onClick={() => setUserDropdownOpen(false)}
+                        >
+                            Register
+                        </NavLink>
+                    </div>
+                )}
+            </div>
 
             {/* Overlay */}
             {sidebarOpen && <div className="overlay" onClick={() => setSidebarOpen(false)} />}
