@@ -19,7 +19,7 @@ import es.uca.tfg.ceramic_affair_web.security.Rol;
 /**
  * Servicio para la autenticación y gestión de usuarios.
  * 
- * @version 1.0
+ * @version 1.1
  */
 @Service
 public class AuthService {
@@ -48,7 +48,22 @@ public class AuthService {
         Usuario usuario = usuarioRepo.findByEmail(loginDTO.getEmail())
             .orElseThrow(() -> new AuthException.CredencialesInvalidas());
 
-        if (!passwordEncoder.matches(loginDTO.getPassword(), usuario.getPassword()) || !usuario.getRoles().contains(requiredRole)) {
+        // Si el login es para USER, comprobar que es SÓLO un USER
+        if (requiredRole == Rol.USER) {
+            boolean esSoloUser = usuario.getRoles().size() == 1 && usuario.getRoles().contains(Rol.USER);
+            if (!esSoloUser) {
+                throw new AuthException.CredencialesInvalidas();
+            }
+        }
+
+        // Si el login es para ADMIN, comprobar que tiene rol ADMIN
+        if (requiredRole == Rol.ADMIN){
+            if (!usuario.getRoles().contains(Rol.ADMIN)) {
+                throw new AuthException.CredencialesInvalidas();
+            }
+        }
+
+        if (!passwordEncoder.matches(loginDTO.getPassword(), usuario.getPassword())) {
             throw new AuthException.CredencialesInvalidas();
         }
 

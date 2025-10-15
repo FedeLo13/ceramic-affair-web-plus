@@ -110,7 +110,7 @@ public class AuthController {
     })
     public ResponseEntity<Void> verifyUser(@RequestParam String token) {
         authService.verify(token);
-        return redirectToFrontend("success");
+        return redirectToFrontend("verified");
     }
 
     @PostMapping("/olvido")

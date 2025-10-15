@@ -278,7 +278,7 @@ public class AuthControllerTest {
         mockMvc.perform(get("/api/public/auth/verificar")
                 .param("token", token))
             .andExpect(status().isFound())
-            .andExpect(header().string("Location", "http://localhost:5173/confirmation?status=success"));
+            .andExpect(header().string("Location", "http://localhost:5173/confirmation?status=verified"));
     }
 
     @Test
@@ -291,11 +291,8 @@ public class AuthControllerTest {
 
         mockMvc.perform(get("/api/public/auth/verificar")
                 .param("token", token))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.status").value(404))
-            .andExpect(jsonPath("$.error").value("Business exception"))
-            .andExpect(jsonPath("$.message").value("Invalid verification token"))
-            .andExpect(jsonPath("$.path").value("/api/public/auth/verificar"));
+            .andExpect(status().isFound())
+            .andExpect(header().string("Location", "http://localhost:5173/confirmation?status=user_not_found"));
     }
 
     @Test
@@ -308,11 +305,8 @@ public class AuthControllerTest {
 
         mockMvc.perform(get("/api/public/auth/verificar")
                 .param("token", token))
-            .andExpect(status().isGone())
-            .andExpect(jsonPath("$.status").value(410))
-            .andExpect(jsonPath("$.error").value("Business exception"))
-            .andExpect(jsonPath("$.message").value("Verification token has expired"))
-            .andExpect(jsonPath("$.path").value("/api/public/auth/verificar"));
+            .andExpect(status().isFound())
+            .andExpect(header().string("Location", "http://localhost:5173/confirmation?status=token_expired"));
     }
 
     @Test
