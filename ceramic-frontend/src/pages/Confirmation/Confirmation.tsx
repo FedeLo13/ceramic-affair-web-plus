@@ -14,6 +14,12 @@ export default function Confirmacion() {
         return "Your subscription has been confirmed!";
       case "unsubscribed":
         return "Your subscription has been successfully canceled.";
+      case "verified":
+        return "Registration verified successfully!";
+      case "user_not_found":
+        return "Registration verification failed. Please contact support.";
+      case "token_expired":
+        return "The verification link has expired. Please register again.";
       default:
         return "An error occurred while processing your request.";
     }
