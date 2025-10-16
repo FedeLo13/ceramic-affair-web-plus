@@ -47,7 +47,7 @@ public class AuthController {
     @Operation(summary = "Iniciar sesión como usuario", description = "Permite a un usuario iniciar sesión con su email y contraseña", tags = { "Auth" })
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso"),
-        @ApiResponse(responseCode = "400", description = "Datos inválidos proporcionados o reCAPTCHA inválido"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos proporcionados, reCAPTCHA inválido, verificación pendiente o usuario no encontrado"),
         @ApiResponse(responseCode = "401", description = "Credenciales inválidas"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
@@ -66,7 +66,7 @@ public class AuthController {
     @Operation(summary = "Iniciar sesión como administrador", description = "Permite a un administrador iniciar sesión con su email y contraseña", tags = { "Auth" })
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso"),
-        @ApiResponse(responseCode = "400", description = "Datos inválidos proporcionados o reCAPTCHA inválido"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos proporcionados, reCAPTCHA inválido o verificación pendiente"),
         @ApiResponse(responseCode = "401", description = "Credenciales inválidas"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })

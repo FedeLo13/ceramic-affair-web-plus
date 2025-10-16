@@ -65,6 +65,7 @@ public class AuthServiceTest {
             passwordEncoder.encode("password"), 
             Set.of(Rol.USER)
         );
+        usuario.setVerificado(true);
 
         usuarioRepo.save(usuario);
 
@@ -88,6 +89,7 @@ public class AuthServiceTest {
             passwordEncoder.encode("password"), 
             Set.of(Rol.ADMIN)
         );
+        usuario.setVerificado(true);
 
         usuarioRepo.save(usuario);
 
@@ -115,6 +117,27 @@ public class AuthServiceTest {
     }
 
     @Test
+    @DisplayName("Servicio - Login fallido (Usuario no verificado)")
+    public void testLoginFallidoUsuarioNoVerificado() {
+        // Crear un usuario de prueba no verificado
+        Usuario usuario = new Usuario(
+            "unverified@example.com",
+            passwordEncoder.encode("password"),
+            Set.of(Rol.USER)
+        );
+
+        usuarioRepo.save(usuario);
+
+        // Intentar iniciar sesión con un usuario no verificado
+        assertThatThrownBy(() -> {
+            authService.login(
+                new LoginDTO("unverified@example.com", "password"),
+                Rol.USER
+            );
+        }).isInstanceOf(AuthException.VerificacionPendiente.class);
+    }
+
+    @Test
     @DisplayName("Servicio - Login fallido (Contraseña incorrecta)")
     public void testLoginFallidoContrasenaIncorrecta() {
         // Crear un usuario de prueba
@@ -123,6 +146,7 @@ public class AuthServiceTest {
             passwordEncoder.encode("password"),
             Set.of(Rol.USER)
         );
+        usuario.setVerificado(true);
 
         usuarioRepo.save(usuario);
 

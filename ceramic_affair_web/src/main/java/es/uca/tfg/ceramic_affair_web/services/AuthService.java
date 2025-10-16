@@ -63,6 +63,12 @@ public class AuthService {
             }
         }
 
+        // Comprobar que el usuario está verificado
+        if (!usuario.isVerificado()) {
+            throw new AuthException.VerificacionPendiente();
+        }
+
+        // Comprobar la contraseña
         if (!passwordEncoder.matches(loginDTO.getPassword(), usuario.getPassword())) {
             throw new AuthException.CredencialesInvalidas();
         }
