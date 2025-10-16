@@ -16,6 +16,7 @@ interface AuthContextProps {
     hasRole: (role: string) => boolean;
     login: (token: string) => void;
     logout: () => void;
+    userEmail: string | null;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -25,6 +26,7 @@ export let globalLogout: (() => void) | null = null;
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
     const [roles, setRoles] = useState<string[]>([]);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
     const navigate = useNavigate();
 
     // Verificar expiración al cargar la aplicación
@@ -34,6 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else if (token) {
             const decoded = jwtDecode<jwtPayload>(token);
             setRoles(decoded.roles || []);
+            setUserEmail(decoded.sub || null);
         }
     }, []);
 
@@ -54,6 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         const decoded = jwtDecode<jwtPayload>(newToken);
         setRoles(decoded.roles || []);
+        setUserEmail(decoded.sub || null);
 
         // Auto logout si el token expira
         const expirationTime = decoded.exp * 1000 - Date.now();
@@ -67,6 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const handleLogout = () => {
         setToken(null);
         setRoles([]);
+        setUserEmail(null);
         localStorage.removeItem("token");
         navigate("/pieces"); // Redirigir a la página de piezas
     }
@@ -95,7 +100,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 roles,
                 hasRole, 
                 login: handleLogin, 
-                logout: handleLogout 
+                logout: handleLogout,
+                userEmail
             }}
         >
             {children}

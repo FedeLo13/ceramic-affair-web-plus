@@ -9,7 +9,7 @@ export default function Header() {
     const [adminMenuOpen, setAdminMenuOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const userDropdownRef = useRef<HTMLDivElement | null>(null);
-    const { hasRole, logout } = useAuth();
+    const { hasRole, isAuthenticated, userEmail, logout } = useAuth();
 
     useEffect(() => {
         if (sidebarOpen) {
@@ -118,21 +118,35 @@ export default function Header() {
                 </button>
 
                 {userDropdownOpen && (
-                    <div className="user-dropdown-menu">
-                        <NavLink 
-                            to="/user-login"
-                            className="user-login-link" 
-                            onClick={() => setUserDropdownOpen(false)}
-                        >
-                            Login
-                        </NavLink>
-                        <NavLink 
-                            to="/user-register"
-                            className="user-login-link" 
-                            onClick={() => setUserDropdownOpen(false)}
-                        >
-                            Register
-                        </NavLink>
+                    <div className={`user-dropdown-menu ${isAuthenticated ? "user-logged-in" : ""}`}>
+                        {!isAuthenticated ? (
+                            <>
+                                <NavLink 
+                                    to="/user-login"
+                                    className="user-login-link" 
+                                    onClick={() => setUserDropdownOpen(false)}
+                                >
+                                    Login
+                                </NavLink>
+                                <NavLink 
+                                    to="/user-register"
+                                    className="user-login-link" 
+                                    onClick={() => setUserDropdownOpen(false)}
+                                >
+                                    Register
+                                </NavLink>
+                            </>
+                        ) : (
+                            <>
+                                <div className="user-info">
+                                    <p className="logged-in-text">Logged in as</p>
+                                    <p className="user-email">{userEmail}</p>
+                                </div>
+                                <button className="user-option" onClick={() => setUserDropdownOpen(false)}>Order History</button>
+                                <NavLink to="/password-change" className="user-option" onClick={() => setUserDropdownOpen(false)}>Change Password</NavLink>
+                                <button className="user-option" onClick={() => { logout(); setUserDropdownOpen(false); }}>Logout</button>
+                            </>
+                        )}
                     </div>
                 )}
             </div>

@@ -291,3 +291,58 @@ header nav a:hover {
 .user-dropdown-menu button:hover {
     background-color: #f2f2f2;
 }
+
+/* Estilos cuando el usuario está logueado */
+.user-dropdown-menu.user-logged-in {
+  width: 220px; /* un poco más ancho */
+  padding: 10px 0;
+}
+
+.user-info {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 12px;
+  margin-bottom: 5px;
+}
+
+.logged-in-text {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+}
+
+.user-email {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2B3A64;
+  margin: 4px 0 0;
+  word-break: break-all;
+}
+
+.user-option {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #2B3A64;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Quita color azul y subrayado de NavLink */
+.user-option:link,
+.user-option:visited {
+  color: #2B3A64;
+  text-decoration: none;
+}
+
+.user-option:hover {
+  background-color: #f2f2f2;
+}
+
+.user-option.logout {
+  color: #c00;
+  font-weight: bold;
+}

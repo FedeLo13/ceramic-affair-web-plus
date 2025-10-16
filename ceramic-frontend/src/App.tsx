@@ -17,6 +17,8 @@ import AdminFindMeNew from "./pages/Admin/AdminFindMeNew";
 import PoliticaPrivacidad from "./pages/PolíticaPrivacidad/PrivacyPolicy";
 import UserLogin from "./pages/Login/UserLogin";
 import UserRegister from "./pages/Register/UserRegister";
+import UserRoute from "./components/ProtectedRoutes/UserRoute";
+import PasswordChange from "./pages/Password/PasswordChange";
 
 function App() {
   return (
@@ -43,6 +45,14 @@ function App() {
         <Route path="user-login" element={
           <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
             <UserLogin />
+          </GoogleReCaptchaProvider>
+        } />
+        {/* Rutas protegidas para usuarios */}
+        <Route path="password-change" element={
+          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+            <UserRoute>
+              <PasswordChange />
+            </UserRoute>
           </GoogleReCaptchaProvider>
         } />
         {/* Rutas de administración */}
