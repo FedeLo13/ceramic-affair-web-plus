@@ -80,3 +80,17 @@
   font-size: 0.9rem;
   text-align: center;
 }
+
+.forgot-password {
+  text-align: center;
+}
+
+.forgot-password a {
+  color: #2B3A64;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}

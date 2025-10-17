@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { LoginDTO } from "../../types/auth-user.types";
 import { useAuth } from "../../context/AuthContext";
 import "./LoginForm.css";
@@ -78,6 +78,15 @@ export default function LoginForm({ onSubmit, redirectTo }: LoginFormProps) {
                         onChange={(e) => setPassword(e.target.value)} 
                         required />
                 </div>
+
+                {/* Link para recuperar contraseña */}
+                <p className="forgot-password">
+                    Forgot your password?{" "}
+                    <Link to="/reset-request" className="forgot-link">
+                        Click here.
+                    </Link>
+                </p>
+
                 {error && <p className="error-message">{error}</p>}
                 <button type="submit" className="login-button">Login</button>
             </form>

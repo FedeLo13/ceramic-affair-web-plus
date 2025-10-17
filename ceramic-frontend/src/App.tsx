@@ -19,6 +19,8 @@ import UserLogin from "./pages/Login/UserLogin";
 import UserRegister from "./pages/Register/UserRegister";
 import UserRoute from "./components/ProtectedRoutes/UserRoute";
 import PasswordChange from "./pages/Password/PasswordChange";
+import ResetPassword from "./pages/Password/ResetPassword";
+import ResetRequest from "./pages/Password/ResetRequest";
 
 function App() {
   return (
@@ -47,6 +49,12 @@ function App() {
             <UserLogin />
           </GoogleReCaptchaProvider>
         } />
+          <Route path="reset-request" element={
+          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+            <ResetRequest />
+          </GoogleReCaptchaProvider>
+        } />
+        <Route path="reset-password" element={<ResetPassword />} />
         {/* Rutas protegidas para usuarios */}
         <Route path="password-change" element={
           <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
