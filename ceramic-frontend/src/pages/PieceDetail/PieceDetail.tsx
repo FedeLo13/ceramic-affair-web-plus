@@ -4,13 +4,15 @@ import { getProductoById, deleteProducto } from "../../api/productos";
 import type { ProductoOutputDTO } from "../../types/producto.types";
 import type { Imagen } from "../../types/imagen.types";
 import { getImagenById } from "../../api/imagenes";
-import { FaChevronLeft, FaChevronRight, FaEdit, FaTrash } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaEdit, FaShoppingCart, FaTrash } from "react-icons/fa";
 import "./PieceDetail.css";
 import ZoomImage from "../../components/ZoomImage/ZoomImage";
 import ImageModal from "../../components/ImageModal/ImageModal";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+import { addItemToCart } from "../../api/carrito";
+import { addItemToGuestCart, getGuestCart } from "../../types/guestCart";
 
 const BASE_IMAGE_URL = "http://localhost:8080/uploads/";
 
@@ -21,12 +23,16 @@ export default function PieceDetail() {
     const [imagenes, setImagenes] = useState<Imagen[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const { hasRole } = useAuth(); // Hook de autenticación
+    const { hasRole, isAuthenticated, userId } = useAuth(); // Hook de autenticación
     const [isMobile, setIsMobile] = useState(false);
     const [showDeleteMessage, setShowDeleteMessage] = useState(false);
+    const [addingToCart, setAddingToCart] = useState(false);
+    const [cartMessage, setCartMessage] = useState<string | null>(null);
+    const [visibleMessage, setVisibleMessage] = useState(false);
 
     const thumbsRef = useRef<HTMLDivElement>(null);
 
+    // Efecto para centrar la miniatura activa
     useEffect(() => {
         if (!thumbsRef.current) return;
 
@@ -50,6 +56,7 @@ export default function PieceDetail() {
     }, [currentImageIndex]);
 
 
+    // Efecto para obtener el producto y sus imágenes al cargar el componente
     useEffect(() => {
         const fetchProducto = async () => {
             if (id) {
@@ -70,6 +77,7 @@ export default function PieceDetail() {
         fetchProducto();
     }, [id]);
 
+    // Efecto para detectar si es móvil
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
@@ -83,6 +91,24 @@ export default function PieceDetail() {
         };
     }, []);
 
+    // Efecto para mostrar/ocultar el mensaje de carrito
+    useEffect(() => {
+        if (cartMessage) {
+            setVisibleMessage(true);
+
+            // Auto-cierre después de 3 segundos
+            const timer = setTimeout(() => setVisibleMessage(false), 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [cartMessage]);
+
+    // Cuando termina la animación, limpia el cartMessage
+    const handleTransitionEnd = () => {
+        if (!visibleMessage) setCartMessage(null);
+    };
+
+    // Configuración de swipe para las miniaturas
     const handlers = useSwipeable({
         onSwipedLeft: () => {
             if (thumbsRef.current) {
@@ -99,6 +125,7 @@ export default function PieceDetail() {
 
     const { ref: swipeRef, ...handlersWithoutRef } = handlers;
 
+    // Ref combinado para las miniaturas
     const combinedRef = useCallback((node: HTMLDivElement | null) => {
         thumbsRef.current = node;
 
@@ -113,6 +140,7 @@ export default function PieceDetail() {
         return <p>Loading...</p>;
     }
 
+    // Manejadores de eventos
     const handlePrev = () => {
         setCurrentImageIndex((prevIndex) => 
             (prevIndex === 0 ? producto.idsImagenes.length - 1 : prevIndex - 1)
@@ -137,6 +165,51 @@ export default function PieceDetail() {
             navigate("/pieces");
         } catch (error) {
             console.error("Error deleting product:", error);
+        }
+    };
+
+    // Manejar la adición al carrito
+    const handleAddToCart = async () => {
+        if (!producto) return;
+
+        setAddingToCart(true);
+        setCartMessage(null);
+
+        try {
+            if (isAuthenticated && userId) {
+                // Usuario loguado -> usar API del backend
+                await addItemToCart(userId.toString(), producto.id.toString());
+                setCartMessage("Piece added to cart!");
+            } else {
+                // Usuario invitado -> usar localStorage
+                const imageUrl = 
+                    imagenes.length > 0
+                    ? `${BASE_IMAGE_URL}${imagenes[0].ruta}`
+                    : "/images/1068302.png";
+                
+                const { items: guestCartItems } = getGuestCart();
+
+                const alreadyInCart = guestCartItems.some(
+                    (item: any) => item.productId === producto.id
+                );
+
+                if (alreadyInCart) {
+                    setCartMessage("This piece is already in your cart!");
+                } else {
+                    addItemToGuestCart(producto, imageUrl);
+                    setCartMessage("Piece added to cart!");
+                }
+            }
+        } catch (error: any) {
+            console.error("Error adding item to cart:", error);
+            
+            if (error instanceof Error && error.message.includes("Product already in cart")) {
+                setCartMessage("This piece is already in your cart!");
+            } else {
+                setCartMessage("Error adding piece to cart. Please contact support.");
+            }
+        } finally {
+            setAddingToCart(false);
         }
     };
 
@@ -236,10 +309,20 @@ export default function PieceDetail() {
                         {producto.diametro > 0 && <p>Diámetro: {producto.diametro} cm</p>}
                     </div>
 
-                    {/* Sold out */}
-                    {producto.soldOut && (
+                    {/* Sold out o añadir al carrito */}
+                    {producto.soldOut ? (
                         <div className="sold-out">
                             <span>SOLD OUT</span>
+                        </div>
+                    ) : (
+                        <div className="add-to-cart">
+                            <button
+                                onClick={handleAddToCart}
+                                disabled={addingToCart}
+                                className="edit-button"
+                            >
+                                {addingToCart ? "Adding..." : <><FaShoppingCart /> Add to Cart</>}
+                            </button>
                         </div>
                     )}
 
@@ -284,6 +367,21 @@ export default function PieceDetail() {
                     )}
                 </div>
             </div>
+            {/* Mensaje tipo toast para el carrito */}
+            {cartMessage && (
+                <div
+                    className={`toast-message ${visibleMessage ? "show" : "hide"}`}
+                    onTransitionEnd={handleTransitionEnd}
+                >
+                    {cartMessage}
+                    <button
+                        className="toast-close-btn"
+                        onClick={() => setVisibleMessage(false)}
+                    >
+                        ×
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
