@@ -17,6 +17,7 @@ interface AuthContextProps {
     login: (token: string) => void;
     logout: () => void;
     userEmail: string | null;
+    userId: number | null;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -27,6 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
     const [roles, setRoles] = useState<string[]>([]);
     const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [userId, setUserId] = useState<number | null>(null);
     const navigate = useNavigate();
 
     // Verificar expiración al cargar la aplicación
@@ -58,6 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const decoded = jwtDecode<jwtPayload>(newToken);
         setRoles(decoded.roles || []);
         setUserEmail(decoded.sub || null);
+        setUserId(decoded.userId || null);
 
         // Auto logout si el token expira
         const expirationTime = decoded.exp * 1000 - Date.now();
@@ -101,7 +104,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 hasRole, 
                 login: handleLogin, 
                 logout: handleLogout,
-                userEmail
+                userEmail,
+                userId
             }}
         >
             {children}
