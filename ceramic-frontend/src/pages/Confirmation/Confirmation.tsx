@@ -20,6 +20,10 @@ export default function Confirmacion() {
         return "Registration verification failed. Please contact support.";
       case "token_expired":
         return "The verification link has expired. Please register again.";
+      case "checkout_success":
+        return "Thank you for your purchase! Your order has been successfully processed. You will receive a confirmation email shortly.";
+      case "checkout_failed":
+        return "Unfortunately, your payment could not be processed. Please try again or contact support if the issue persists.";
       default:
         return "An error occurred while processing your request.";
     }
