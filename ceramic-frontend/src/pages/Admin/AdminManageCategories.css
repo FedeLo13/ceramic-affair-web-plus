@@ -1,3 +1,26 @@
+.admin-categories-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-categories-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-categories-header h2 {
+  color: #2B3A64;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
 .admin-categories {
   max-width: 800px;
   margin: 0 auto;
@@ -97,7 +120,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   transition: background 0.2s, opacity 0.2s;
-  background: #FDF3ED;
+  background: #fafafa;
   border: none;
   padding: 10px;
   display: inline-flex;      /* línea flexible */
