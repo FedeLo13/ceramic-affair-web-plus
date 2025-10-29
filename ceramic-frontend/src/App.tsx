@@ -21,6 +21,11 @@ import UserRoute from "./components/ProtectedRoutes/UserRoute";
 import PasswordChange from "./pages/Password/PasswordChange";
 import ResetPassword from "./pages/Password/ResetPassword";
 import ResetRequest from "./pages/Password/ResetRequest";
+import CartPage from "./pages/CartPage/CartPage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import UserOrdersPage from "./pages/UserOrdersPage/UserOrdersPage";
+import OrderDetails from "./pages/OrderDetails/OrderDetails";
+import AdminOrdersPage from "./pages/Admin/AdminOrdersPage";
 
 function App() {
   return (
@@ -39,6 +44,8 @@ function App() {
         } />
         <Route path="find-me" element={<FindMe />} />
         <Route path="privacy-policy" element={<PoliticaPrivacidad />} />
+        <Route path="cart" element={<CartPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
         <Route path="user-register" element={
           <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
             <UserRegister />
@@ -62,6 +69,16 @@ function App() {
               <PasswordChange />
             </UserRoute>
           </GoogleReCaptchaProvider>
+        } />
+        <Route path="my-orders" element={
+          <UserRoute>
+            <UserOrdersPage />
+          </UserRoute>
+        } />
+        <Route path="orders/:id" element={
+          <UserRoute>
+            <OrderDetails />
+          </UserRoute>
         } />
         {/* Rutas de administración */}
         <Route path="admin-login" element={
@@ -94,6 +111,11 @@ function App() {
         <Route path="admin/categories" element={
           <AdminRoute>
             <AdminManageCategories />
+          </AdminRoute>
+        } />
+        <Route path="admin/orders" element={
+          <AdminRoute>
+            <AdminOrdersPage />
           </AdminRoute>
         } />
       </Route>
