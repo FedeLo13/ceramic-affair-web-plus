@@ -39,6 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const decoded = jwtDecode<jwtPayload>(token);
             setRoles(decoded.roles || []);
             setUserEmail(decoded.sub || null);
+            setUserId(decoded.userId || null);
         }
     }, []);
 
