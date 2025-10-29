@@ -10,6 +10,7 @@ import es.uca.tfg.ceramic_affair_web.DTOs.CheckoutDTO;
 import es.uca.tfg.ceramic_affair_web.DTOs.CheckoutResponseDTO;
 import es.uca.tfg.ceramic_affair_web.entities.Pedido;
 import es.uca.tfg.ceramic_affair_web.exceptions.CarritoException;
+import es.uca.tfg.ceramic_affair_web.exceptions.EmailException;
 import es.uca.tfg.ceramic_affair_web.exceptions.PagoException;
 import jakarta.transaction.Transactional;
 
@@ -32,6 +33,9 @@ public class CheckoutService {
 
     @Autowired
     private PagoService pagoService;
+
+    @Autowired
+    private EmailService emailService;
 
     /**
      * Método para procesar el checkout.
@@ -91,6 +95,23 @@ public class CheckoutService {
             pagoService.createPagoInvitado(pedido, checkoutDTO.getTotal(), checkoutDTO.getTipoPago());
         }
 
+        // Paso 5: Enviar correo de confirmación
+        String email = checkoutDTO.getPedido().getEmailCliente();
+        enviarCorreoConfirmacion(email, pedido);
+
         return new CheckoutResponseDTO(pedido.getId(), "SUCCESS", pedido.getTotal());
+    }
+
+    private void enviarCorreoConfirmacion(String email, Pedido pedido) {
+        String subject = "Order Confirmation - Order #" + pedido.getId();
+        String body = "<p>Thank you for your purchase!</p>"
+                + "<p>Your order ID is: " + pedido.getId() + "</p>"
+                + "<p>Total Amount: $" + pedido.getTotal() + "</p>"
+                + "<p>We will notify you once your order is shipped.</p>";
+        try {
+            emailService.sendEmail(email, subject, body);
+        } catch (Exception e) {
+            throw new EmailException.EnvioFallido(e);
+        }
     }
 }

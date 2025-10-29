@@ -38,6 +38,9 @@ public class PedidoService {
     @Autowired
     private UsuarioRepo usuarioRepo;
 
+    @Autowired
+    private EmailService emailService;
+
     /**
      * Método para obtener un pedido por su ID.
      * 
@@ -159,6 +162,9 @@ public class PedidoService {
         Pedido pedido = pedidoRepo.findById(idPedido)
                 .orElseThrow(() -> new PedidoException.NoEncontrado());
         pedido.setEnviado(enviado);
+        if (enviado) {
+            enviarCorreoEnvio(pedido);
+        }
         pedidoRepo.save(pedido);
     }
 
@@ -173,5 +179,16 @@ public class PedidoService {
             throw new PedidoException.NoEncontrado();
         }
         pedidoRepo.deleteById(id);
+    }
+
+    private void enviarCorreoEnvio(Pedido pedido) {
+        String asunto = "Order Shipment Confirmation";
+        String cuerpo = "<p>Dear " + pedido.getNombreCliente() + ",</p>" +
+                        "<p>Your order with ID #" + pedido.getId() + " has been shipped.</p>" +
+                        "<p>Thank you for shopping with us!</p>" +
+                        "<p>Best regards,</p>" +
+                        "<p>Ceramic Affair Team</p>";
+
+        emailService.sendEmail(pedido.getEmailCliente(), asunto, cuerpo);
     }
 }
