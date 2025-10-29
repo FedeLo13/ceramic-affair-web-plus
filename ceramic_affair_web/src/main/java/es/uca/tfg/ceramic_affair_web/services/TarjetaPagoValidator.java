@@ -2,6 +2,8 @@ package es.uca.tfg.ceramic_affair_web.services;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Service;
+
 import es.uca.tfg.ceramic_affair_web.entities.TipoPago;
 
 /**
@@ -10,6 +12,7 @@ import es.uca.tfg.ceramic_affair_web.entities.TipoPago;
  * 
  * @version 1.0
  */
+@Service
 public class TarjetaPagoValidator implements PagoValidator {
 
     @Override
