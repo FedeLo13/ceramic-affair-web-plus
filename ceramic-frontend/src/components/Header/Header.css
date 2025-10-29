@@ -603,3 +603,23 @@ header nav a:hover {
     flex-shrink: 0;
   }
 }
+
+.cart-checkout-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.cart-checkout-button {
+  background-color: #2B3A64;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.cart-checkout-button:hover {
+  background-color: #1f2c4a;
+}

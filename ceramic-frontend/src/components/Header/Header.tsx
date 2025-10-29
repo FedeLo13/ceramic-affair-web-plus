@@ -208,6 +208,7 @@ export default function Header() {
                                     <NavLink to="/admin/products/new" onClick={() => setSidebarOpen(false)}>Add Pieces</NavLink>
                                     <NavLink to="/admin/find-me/new" onClick={() => setSidebarOpen(false)}>Add Find Me Post</NavLink>
                                     <NavLink to="/admin/categories" onClick={() => setSidebarOpen(false)}>Manage Categories</NavLink>
+                                    <NavLink to="/admin/orders" onClick={() => setSidebarOpen(false)}>Manage Orders</NavLink>
                                     <button className="logout-btn" onClick={() => { logout(); setSidebarOpen(false); }}>
                                         Logout
                                     </button>
@@ -260,7 +261,7 @@ export default function Header() {
                                         <p className="logged-in-text">Logged in as</p>
                                         <p className="user-email">{userEmail}</p>
                                     </div>
-                                    <button className="user-option" onClick={() => setUserDropdownOpen(false)}>Order History</button>
+                                    <NavLink to="/my-orders" className="user-option" onClick={() => setUserDropdownOpen(false)}>Order History</NavLink>
                                     <NavLink to="/password-change" className="user-option" onClick={() => setUserDropdownOpen(false)}>Change Password</NavLink>
                                     <button className="user-option" onClick={() => { logout(); setUserDropdownOpen(false); }}>Logout</button>
                                 </>
@@ -357,6 +358,16 @@ export default function Header() {
                                                         </li>
                                                     ))}
                                                 </ul>
+                                            </div>
+                                            {/*Botón de Checkout*/}
+                                            <div className="cart-checkout-button-container">
+                                                <NavLink
+                                                    to="/cart"
+                                                    className="cart-checkout-button"
+                                                    onClick={() => setCartDropdownOpen(false)}
+                                                >
+                                                    Go to Cart
+                                                </NavLink>
                                             </div>
                                         </div>
                                     )}
