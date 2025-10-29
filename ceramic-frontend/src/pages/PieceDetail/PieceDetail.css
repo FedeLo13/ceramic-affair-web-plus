@@ -255,6 +255,10 @@
   transition: background 0.2s ease;
 }
 
+.edit-button:hover {
+  background-color: #1f2c4a;
+}
+
 /* Botón eliminar */
 .delete-button {
   background-color: #2B3A64;
@@ -265,6 +269,10 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #1f2c4a;
 }
 
 .piece-delete-container {

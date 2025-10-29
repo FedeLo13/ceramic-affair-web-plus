@@ -127,8 +127,10 @@ export default function AdminManageCategories() {
 
   return (
     <>
-      <div className="admin-categories">
-        <div className="admin-categories-title">Categories</div>
+      <div className="admin-categories-container">
+        <div className="admin-categories-header">
+          <h2>Categories</h2>
+        </div>
         {loading ? (
           <p className="admin-categories-loading">Loading...</p>
         ) : (

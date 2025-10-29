@@ -54,8 +54,7 @@ h1, h2 {
 }
 
 .contact-button:hover {
-  background: #333333;
-  transform: translateY(-1px);
+  background-color: #1f2c4a;
 }
 
 .contact-form {
