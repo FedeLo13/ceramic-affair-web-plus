@@ -1,0 +1,143 @@
+.order-details-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.order-details-container h2 {
+  text-align: center;
+  color: #2b3a64;
+  margin-bottom: 1.5rem;
+}
+
+.order-details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.order-details-form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.order-details-form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 200px;
+}
+
+.order-details-form-group label {
+  font-weight: 600;
+  color: #2b3a64;
+}
+
+.order-details-form-group input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f2f2f2;
+  color: #333;
+  font-size: 1rem;
+}
+
+.order-details-form-group input.status-shipped {
+  background: #dce3f8;
+  color: #2b3a64;
+  font-weight: 600;
+}
+
+.order-details-form-group input.status-pending {
+  background: #ffe9e9;
+  color: #b42323;
+  font-weight: 600;
+}
+
+/* Admin section */
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.admin-btn {
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.admin-btn.mark {
+  background: #2b3a64;
+}
+
+.admin-btn.mark:hover {
+  background: #1f2c4a;
+}
+
+.admin-btn.revert {
+  background: #d72638;
+}
+
+.admin-btn.revert:hover {
+  background: #b71c29;
+}
+
+/* Product list */
+.order-products-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-product-item {
+  display: flex;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 0.8rem;
+  align-items: center;
+}
+
+.order-product-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.product-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2b3a64;
+}
+
+.product-info .price {
+  font-weight: 600;
+  color: #333;
+}
+
+.product-info .category {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.order-details-loading {
+  text-align: center;
+  color: #555;
+  padding: 2rem;
+}

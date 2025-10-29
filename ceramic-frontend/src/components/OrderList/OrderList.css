@@ -1,0 +1,161 @@
+.orders-container {
+  width: 100%;
+  max-width: 1000px;
+  background: #FAFAFA;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  height: 80 vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0.5rem 0;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+}
+
+.orders-list h2 {
+  margin: 30px;
+  color: #2B3A64;
+}
+
+.orders-container ul {
+  list-style: none;
+  padding: 1rem 1.2rem 6rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.order-row {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.order-row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.order-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 16px;
+  min-width: 0;
+}
+
+.order-preview {
+  width: 90px;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.order-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.order-title {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 600;
+  color: #2B3A64;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-name {
+  max-width: 260px;
+  display:inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}
+
+.order-id {
+  margin-bottom: 5px;
+}
+
+.more {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.order-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.order-amount {
+  font-weight: 700;
+  color: #2B3A64;
+}
+
+.order-badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+}
+
+.badge-shipped {
+  background: #2B3A64;
+}
+
+.badge-pending {
+  background: #D72638; /* rojo que pediste */
+}
+
+.order-row.pending {
+  border: 1px solid rgba(215,38,56,0.12);
+}
+
+/* small helpers */
+.orders-loading, .orders-error, .orders-empty {
+  text-align: center;
+  padding: 18px;
+  color: #666;
+}
+
+/* Buttons simple active state for admin */
+.btn-active {
+  background: #2B3A64;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 10px;
+  border: none;
+}
