@@ -72,7 +72,6 @@ export default function OrderList({ fetchOrders, title = "Orders", showClient = 
                     {orders.map((order) => {
                         const first = order.items[0];
                         const moreCount = Math.max(0, (order.items?.length || 0) - 1);
-                        // @ts-ignore temporal para preview
                         const preview: string = (order as any).__previewImage || "images/1068302.png";
                         return (
                             <li key={order.id} className={`order-row ${order.enviado ? "shipped" : "pending"}`} onClick={() => navigate(`/orders/${order.id}`)}>

@@ -62,17 +62,16 @@
     content: "← ";
 }
 
-/* 📱 Versión responsive */
 @media (max-width: 768px) {
   .findme-card-body {
-    flex-direction: column; /* Pila vertical */
+    flex-direction: column;
   }
 
   .findme-card-map {
     width: 100%;
-    max-width: 300px; /* nunca más ancho de esto */
-    height: 220px;    /* más bajito en móvil */
-    margin: 0 auto;  /* centra horizontalmente */
+    max-width: 300px;
+    height: 220px;
+    margin: 0 auto;
   }
 
   .findme-card-map-link::before {
@@ -111,12 +110,12 @@
 .findme-delete-container {
   display: flex;
   align-items: center;
-  gap: 10px; /* espacio entre botón y mensaje */
+  gap: 10px;
   position: relative;
 }
 
 .findme-delete-confirmation {
   display: flex;
   align-items: center;
-  gap: 10px; /* espacio entre botones y texto */
+  gap: 10px;
 }

@@ -4,9 +4,9 @@
 
 .contact-form-section {
   display: flex;
-  flex-direction: column; /* 👈 fuerza que h2 y form estén uno debajo del otro */
+  flex-direction: column;
   margin: 0 auto;
-  align-items: center;    /* 👈 centra el contenido dentro */
+  align-items: center;
 }
 
 
@@ -79,7 +79,7 @@ h1, h2 {
 
 .name-field {
   display: flex;
-  flex-direction: column; /* asegura label arriba y input debajo */
+  flex-direction: column;
 }
 
 .name-field input {
@@ -89,7 +89,7 @@ h1, h2 {
   border-radius: 4px;
   font-size: 0.95rem;
   outline: none;
-  box-sizing: border-box; /* 🔑 asegura que padding y borde no cambien el tamaño */
+  box-sizing: border-box;
   transition: all 0.2s ease;
 }
 
@@ -105,7 +105,7 @@ h1, h2 {
   border-radius: 4px;
   font-size: 0.95rem;
   outline: none;
-  box-sizing: border-box; /* 🔑 asegura que padding y borde no cambien el tamaño */
+  box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, width 0.2s ease;
 }
 
@@ -121,7 +121,7 @@ h1, h2 {
   border-radius: 4px;
   font-size: 0.95rem;
   outline: none;
-  box-sizing: border-box; /* 🔑 asegura que padding y borde no cambien el tamaño */
+  box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, width 0.2s ease;
   resize: vertical;
   min-height: 100px;
@@ -134,9 +134,9 @@ h1, h2 {
 
 .newsletter-section {
   display: flex;
-  flex-direction: column; /* 👈 fuerza que h2 y form estén uno debajo del otro */
+  flex-direction: column;
   margin: 0 auto;
-  align-items: center;    /* 👈 centra el contenido dentro */
+  align-items: center;
   border-radius: 4px;
   max-width: 1000px;
   padding: 2rem;

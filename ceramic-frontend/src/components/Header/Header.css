@@ -4,7 +4,7 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  gap: 1rem; /* opcional: espaciado entre logo y nav */
+  gap: 1rem;
   margin-bottom: 50px;
 }
 
@@ -18,16 +18,16 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 50px;           /* ancho del marcapáginas */
-  height: 50px;          /* alto visible */
+  width: 50px;
+  height: 50px;
   background: #FAFAFA;
   border: none;
-  border-radius: 0 8px 8px 0; /* borde redondeado en la derecha */
+  border-radius: 0 8px 8px 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1100; /* para que esté por encima de otros elementos */
+  z-index: 1100;
   transition: transform 0.3s ease;
 }
 
@@ -38,16 +38,16 @@ header {
 
 header nav a,
 header nav .active {
-  color: inherit; /* hereda el color del texto padre */
-  text-decoration: none; /* quita el subrayado */
+  color: inherit;
+  text-decoration: none;
 }
 
 header nav a:hover {
-  color: #555; /* color al pasar el mouse, opcional */
+  color: #555;
 }
 
 .logo img {
-  height: 150px; /* o el tamaño que tú veas */
+  height: 150px;
   object-fit: contain;
   display: block;
   margin-top: 20px;
@@ -63,10 +63,9 @@ header nav a:hover {
 
 .nav-links {
   display: flex;
-  gap: 75px; /* espacio entre los enlaces */
+  gap: 75px;
 }
 
-/* icono a la derecha */
 .nav-container .instagram-icon {
   margin-left: auto;
   color: inherit;
@@ -82,12 +81,12 @@ header nav a:hover {
 
 @media (max-width: 768px) {
   .nav-links {
-    gap: 15px; /* menos espacio entre enlaces */
-    font-size: 16px; /* enlaces más pequeños */
+    gap: 15px;
+    font-size: 16px;
   }
 
   .nav-container {
-    gap: 10px; /* icono más pegado aún */
+    gap: 10px;
   }
 }
 
@@ -115,17 +114,17 @@ header nav a:hover {
 }
 
 .sidebar-img {
-  width: 100%;           /* ocupa todo el ancho de la sidebar */
-  flex-shrink: 0;        /* evita que se reduzca en layouts flex */
+  width: 100%;
+  flex-shrink: 0;
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
 .sidebar-img img {
-  width: 70%;           /* la imagen ocupa todo el ancho */
-  height: auto;          /* mantiene la proporción */
-  display: block;        /* elimina espacio inferior */
-  margin: 0 auto;     /* centra la imagen */
+  width: 70%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .sidebar-content {
@@ -153,7 +152,6 @@ header nav a:hover {
     color: inherit;
 }
 
-/* Evitar estilos de link predeterminados */
 .sidebar a:hover {
     color: #000;
 }
@@ -208,14 +206,13 @@ header nav a:hover {
   color: #555;
 }
 
-/* Evita scroll vertical e horizontal */
 .no-scroll {
   overflow: hidden;
   height: 100%;
 }
 
 .user-dropdown {
-  z-index: 200;    /* más alto que el header y el sidebar */
+  z-index: 200;
 }
 
 .user-toggle {
@@ -240,13 +237,11 @@ header nav a:hover {
   animation: fadeIn 0.2s ease-out;
 }
 
-/* Animación */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Estilo base para enlaces dentro del dropdown */
 .user-login-link {
   display: block;
   text-decoration: none;
@@ -261,19 +256,16 @@ header nav a:hover {
   transition: background-color 0.2s;
 }
 
-/* Quita color azul y subrayado de NavLink */
 .user-login-link:link,
 .user-login-link:visited {
   color: #2B3A64;
   text-decoration: none;
 }
 
-/* Hover */
 .user-login-link:hover {
   background-color: #f2f2f2;
 }
 
-/* Botones del dropdown */
 .user-dropdown-menu button {
     background: none;
     border: none;
@@ -289,9 +281,8 @@ header nav a:hover {
     background-color: #f2f2f2;
 }
 
-/* Estilos cuando el usuario está logueado */
 .user-dropdown-menu.user-logged-in {
-  width: 220px; /* un poco más ancho */
+  width: 220px;
   padding: 10px 0;
 }
 
@@ -328,7 +319,6 @@ header nav a:hover {
   transition: background-color 0.2s;
 }
 
-/* Quita color azul y subrayado de NavLink */
 .user-option:link,
 .user-option:visited {
   color: #2B3A64;
@@ -357,15 +347,14 @@ header nav a:hover {
   transition: transform 0.2s ease;
 }
 
-/* Contenedor de los iconos del header */
 .header-icons {
   position: absolute;
-  top: 16px;         /* posición superior del icono de usuario */
+  top: 16px; 
   right: 20px;
   display: flex;
-  flex-direction: column; /* uno encima del otro */
-  align-items: center;    /* centrados entre sí */
-  gap: 12px;              /* espacio entre iconos */
+  flex-direction: column;
+  align-items: center;
+  gap: 12px; 
   z-index: 300
 }
 
@@ -501,13 +490,13 @@ header nav a:hover {
 
 @media (max-width: 768px) {
   .cart-dropdown-menu {
-    position: absolute;        /* se mantiene dentro del flujo del header */
-    top: 50px;                 /* justo debajo del icono */
-    right: 0;                  /* pegado al icono, sin moverse */
-    width: 100vw;               /* ancho máximo visual */
-    max-width: 380px;          /* no más ancho que esto */
-    max-height: 65vh;          /* límite vertical */
-    overflow-y: auto;          /* scroll si hay muchos productos */
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 100vw;
+    max-width: 380px;
+    max-height: 65vh;
+    overflow-y: auto;
     border-radius: 14px;
     background: #fff;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -515,15 +504,14 @@ header nav a:hover {
     z-index: 1000;
   }
 
-  /* Evita que se corte el dropdown en pantallas pequeñas */
   body, html {
     overflow-x: hidden;
   }
 
-  /* Asegura que el contenedor no recorte el dropdown */
+
   .cart-icon {
-    position: relative; /* el dropdown se posicionará respecto a esto */
-    overflow: visible;  /* permite que el menú se vea fuera del icono */
+    position: relative;
+    overflow: visible;
   }
 
   .cart-pieces-table-header {
@@ -551,7 +539,7 @@ header nav a:hover {
     align-items: center;
     gap: 0.6rem;
     flex: 1;
-    min-width: 0; /* evita overflow */
+    min-width: 0;
   }
 
   .cart-preview-image {
@@ -566,7 +554,7 @@ header nav a:hover {
   .cart-col-category,
   .cart-col-price,
   .cart-col-actions {
-    flex: 0 0 auto; /* no crecer ni encoger */
+    flex: 0 0 auto;
   }
 
   .cart-col-category {

@@ -137,21 +137,19 @@
 }
 
 .badge-pending {
-  background: #D72638; /* rojo que pediste */
+  background: #D72638;
 }
 
 .order-row.pending {
   border: 1px solid rgba(215,38,56,0.12);
 }
 
-/* small helpers */
 .orders-loading, .orders-error, .orders-empty {
   text-align: center;
   padding: 18px;
   color: #666;
 }
 
-/* Buttons simple active state for admin */
 .btn-active {
   background: #2B3A64;
   color: white;
