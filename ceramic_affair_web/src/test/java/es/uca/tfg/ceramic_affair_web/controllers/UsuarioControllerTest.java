@@ -97,7 +97,7 @@ public class UsuarioControllerTest {
     @Test
     @DisplayName("Controlador - Cambio de contraseña con credenciales inválidas")
     void testCambioContrasenaCredencialesInvalidas() throws Exception {
-        doThrow(new AuthException.CredencialesInvalidas("Invalid credentials"))
+        doThrow(new AuthException.AntiguaPasswordInvalida("Old password is incorrect"))
             .when(authService).cambiarContrasena(any(String.class), any(String.class), any(String.class));
         when(recaptchaService.verifyRecaptcha(any(String.class))).thenReturn(true);
 
@@ -113,10 +113,10 @@ public class UsuarioControllerTest {
         mockMvc.perform(post("/api/user/cambio")
                 .contentType("application/json")
                 .content(jsonBody))
-            .andExpect(status().isUnauthorized())
-            .andExpect(jsonPath("$.status").value(401))
+            .andExpect(status().isForbidden())
+            .andExpect(jsonPath("$.status").value(403))
             .andExpect(jsonPath("$.error").value("Business exception"))
-            .andExpect(jsonPath("$.message").value("Invalid credentials"))
+            .andExpect(jsonPath("$.message").value("Old password is incorrect"))
             .andExpect(jsonPath("$.path").value("/api/user/cambio"));
     }
 

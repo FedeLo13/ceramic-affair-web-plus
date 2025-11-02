@@ -113,4 +113,24 @@ public class AuthException {
             super(mensaje, HttpStatus.GONE);
         }
     }
+
+    /**
+     * Excepción específica lanzada cuando la contraseña antigua es incorrecta a la hora de cambiar la contraseña.
+     */
+    public static class AntiguaPasswordInvalida extends BusinessException {
+        /**
+         * Constructor de la excepción.
+         */
+        public AntiguaPasswordInvalida() {
+            super("Old password is incorrect", HttpStatus.FORBIDDEN);
+        }
+
+        /**
+         * Constructor overloaded para mensajes personalizados.
+         * @param mensaje
+         */
+        public AntiguaPasswordInvalida(String mensaje) {
+            super(mensaje, HttpStatus.FORBIDDEN);
+        }
+    }
 }

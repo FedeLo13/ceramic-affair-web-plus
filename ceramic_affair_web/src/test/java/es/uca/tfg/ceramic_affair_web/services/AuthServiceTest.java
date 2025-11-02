@@ -328,7 +328,7 @@ public class AuthServiceTest {
         // Intentar cambiar la contraseña con la contraseña actual incorrecta
         assertThatThrownBy(() -> {
             authService.cambiarContrasena(usuarioOpt.get().getEmail(), "wrongpassword", "newpassword");
-        }).isInstanceOf(AuthException.CredencialesInvalidas.class);
+        }).isInstanceOf(AuthException.AntiguaPasswordInvalida.class);
     }
 
     @Test

@@ -167,7 +167,7 @@ public class AuthService {
 
         // Verificar la contraseña actual
         if (!passwordEncoder.matches(antiguaPassword, usuario.getPassword())) {
-            throw new AuthException.CredencialesInvalidas();
+            throw new AuthException.AntiguaPasswordInvalida();
         }
 
         // Actualizar la contraseña
