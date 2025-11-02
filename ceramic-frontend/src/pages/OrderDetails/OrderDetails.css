@@ -61,7 +61,7 @@
 }
 
 /* Admin section */
-.admin-actions {
+.order-admin-actions {
   display: flex;
   justify-content: center;
   margin-top: 1rem;

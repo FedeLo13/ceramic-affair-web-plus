@@ -40,6 +40,11 @@ export default function CheckoutPage() {
   };
 
   const handleOpenModal = (method: "bizum" | "card") => {
+    const formElement = document.querySelector(".checkout-form") as HTMLFormElement;
+    if (!formElement.reportValidity()) {
+      return;
+    }
+    
     setPaymentMethod(method);
     setShowModal(true);
   }

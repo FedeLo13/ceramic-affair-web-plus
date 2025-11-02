@@ -92,14 +92,14 @@ export default function OrderDetails() {
 
       <div className="order-details-form">
         <div className="order-details-form-row">
-          <div className="order-detailsform-group">
+          <div className="order-details-form-group">
             <label>Customer Name</label>
             <input
               readOnly
               value={`${order.pedido.nombreCliente} ${order.pedido.apellidosCliente}`}
             />
           </div>
-          <div className="form-group">
+          <div className="order-details-form-group">
             <label>Email</label>
             <input readOnly value={order.pedido.emailCliente} />
           </div>
@@ -134,7 +134,7 @@ export default function OrderDetails() {
             <label>Total</label>
             <input readOnly value={`${order.total.toFixed(2)} €`} />
           </div>
-          <div className="order-detailsform-group">
+          <div className="order-details-form-group">
             <label>Status</label>
             <input
               readOnly
@@ -145,7 +145,7 @@ export default function OrderDetails() {
         </div>
 
         {hasRole("ADMIN") && (
-          <div className="admin-actions">
+          <div className="order-admin-actions">
             <button
               onClick={handleMarkAsSent}
               disabled={updating}
