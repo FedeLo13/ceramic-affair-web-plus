@@ -148,7 +148,6 @@ public class SuscriptorController {
     }
 
     private void enviarCorreoVerificacion(Suscriptor suscriptor) {
-        // TODO: Cambiar la URL de origen a la de producción cuando esté disponible
         String enlace = "http://localhost:8080/api/public/suscriptores/verificar?token=" + suscriptor.getTokenVerificacion();
         String cuerpo = "<p>Hello,</p>"
                       + "<p>Thank you for subscribing to our newsletter. To complete your subscription, please verify your email address by clicking the link below:</p>"
@@ -164,7 +163,6 @@ public class SuscriptorController {
     }
 
     private ResponseEntity<Void> redirectToFrontend(String status) {
-        // TODO: Cambiar la URL de origen a la de producción cuando esté disponible
         String frontendUrl = "http://localhost:5173/confirmation?status=" + status;
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header("Location", frontendUrl)

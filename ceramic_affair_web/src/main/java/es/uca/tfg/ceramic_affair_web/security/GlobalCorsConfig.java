@@ -9,7 +9,6 @@ import org.springframework.web.filter.CorsFilter;
 
 public class GlobalCorsConfig {
 
-    // TODO: Cambiar la URL de origen a la de producción cuando esté disponible
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();

@@ -41,7 +41,6 @@ public class SecurityConfig {
      * 
      * @return UrlBasedCorsConfigurationSource configurado.
      */
-    // TODO: Cambiar la URL de origen a la de producción cuando esté disponible
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -18,8 +18,6 @@ public class StaticResourceConfig implements WebMvcConfigurer {
      * 
      * @param registry el registrador de recursos estáticos
      */
-    // TODO: Cambiar la ruta de los recursos estáticos a la correcta de producción
-    // En el frontend (ProductCard.tsx)
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Configura la ruta para servir imágenes desde el directorio "uploads"

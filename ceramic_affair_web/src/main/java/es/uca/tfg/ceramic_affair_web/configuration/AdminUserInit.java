@@ -15,7 +15,6 @@ import es.uca.tfg.ceramic_affair_web.repositories.UsuarioRepo;
  * @version 1.0
  */
 @Component
-//TODO: Cambiar el email y la contraseña del administrador a valores seguros en producción.
 public class AdminUserInit implements CommandLineRunner {
 
     private final UsuarioRepo usuarioRepo;

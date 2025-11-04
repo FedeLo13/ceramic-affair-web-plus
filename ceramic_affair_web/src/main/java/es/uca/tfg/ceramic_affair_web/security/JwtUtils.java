@@ -26,7 +26,6 @@ import io.jsonwebtoken.jackson.io.JacksonDeserializer;
 @Component
 public class JwtUtils {
 
-    // TODO: En producción, cargar la clave secreta desde variable de entorno o properties.
     private final MacAlgorithm ALGORITHM;
 
     private final SecretKey SECRET_KEY;

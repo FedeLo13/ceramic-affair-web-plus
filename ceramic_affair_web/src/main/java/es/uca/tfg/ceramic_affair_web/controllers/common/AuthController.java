@@ -146,7 +146,6 @@ public class AuthController {
     }
 
     private ResponseEntity<Void> redirectToFrontend(String status) {
-        // TODO: Cambiar la URL de origen a la de producción cuando esté disponible
         String frontendUrl = "http://localhost:5173/confirmation?status=" + status;
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header("Location", frontendUrl)
