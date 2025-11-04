@@ -38,7 +38,7 @@ function App() {
         <Route path="search" element={<Pieces showFilters={true} />} />
         <Route path="pieces/:id" element={<PieceDetail />} />
         <Route path="contact" element={
-          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+          <GoogleReCaptchaProvider reCaptchaKey='6LdkZQIsAAAAAIs6oRtdueX7dHNyYewyao3pJiwb'>
             <Contact />
           </GoogleReCaptchaProvider>
         } />
@@ -47,24 +47,24 @@ function App() {
         <Route path="cart" element={<CartPage />} />
         <Route path="checkout" element={<CheckoutPage />} />
         <Route path="user-register" element={
-          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+          <GoogleReCaptchaProvider reCaptchaKey='6LdkZQIsAAAAAIs6oRtdueX7dHNyYewyao3pJiwb'>
             <UserRegister />
           </GoogleReCaptchaProvider>
         } />
         <Route path="user-login" element={
-          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+          <GoogleReCaptchaProvider reCaptchaKey='6LdkZQIsAAAAAIs6oRtdueX7dHNyYewyao3pJiwb'>
             <UserLogin />
           </GoogleReCaptchaProvider>
         } />
           <Route path="reset-request" element={
-          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+          <GoogleReCaptchaProvider reCaptchaKey='6LdkZQIsAAAAAIs6oRtdueX7dHNyYewyao3pJiwb'>
             <ResetRequest />
           </GoogleReCaptchaProvider>
         } />
         <Route path="reset-password" element={<ResetPassword />} />
         {/* Rutas protegidas para usuarios */}
         <Route path="password-change" element={
-          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+          <GoogleReCaptchaProvider reCaptchaKey='6LdkZQIsAAAAAIs6oRtdueX7dHNyYewyao3pJiwb'>
             <UserRoute>
               <PasswordChange />
             </UserRoute>
@@ -82,7 +82,7 @@ function App() {
         } />
         {/* Rutas de administración */}
         <Route path="admin-login" element={
-          <GoogleReCaptchaProvider reCaptchaKey='6Ley9IwrAAAAANfsyFpChaZHQLShQWdi7UwYBWxR'>
+          <GoogleReCaptchaProvider reCaptchaKey='6LdkZQIsAAAAAIs6oRtdueX7dHNyYewyao3pJiwb'>
             <AdminLogin />
           </GoogleReCaptchaProvider>
         } />
