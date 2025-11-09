@@ -33,7 +33,7 @@ export default function PieceDetail() {
 
     const thumbsRef = useRef<HTMLDivElement>(null);
 
-    // Efecto para centrar la miniatura activa
+    // Asegura que la miniatura activa esté visible al cambiar la imagen actual
     useEffect(() => {
         if (!thumbsRef.current) return;
 
@@ -56,8 +56,23 @@ export default function PieceDetail() {
         }
     }, [currentImageIndex]);
 
+    // Bloquea el scroll del body cuando el modal está abierto
+    useEffect(() => {
+        if (showModal) {
+            // Bloquea scroll
+            document.body.style.overflow = "hidden";
+        } else {
+            // Restablece scroll
+            document.body.style.overflow = "";
+        }
 
-    // Efecto para obtener el producto y sus imágenes al cargar el componente
+        // Limpia si el componente se desmonta mientras está abierto
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [showModal]);
+
+    // Obtener datos del producto e imágenes al montar
     useEffect(() => {
         const fetchProducto = async () => {
             if (id) {
@@ -78,7 +93,7 @@ export default function PieceDetail() {
         fetchProducto();
     }, [id]);
 
-    // Efecto para detectar si es móvil
+    // Detectar si es móvil o no
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
@@ -138,7 +153,12 @@ export default function PieceDetail() {
     }, [swipeRef]);
 
     if (!producto) {
-        return <p>Loading...</p>;
+        return (
+            <div className="loader-container">
+              <div className="spinner"></div>
+              <p>Loading product...</p>
+            </div>
+        );
     }
 
     // Manejadores de eventos
@@ -258,8 +278,7 @@ export default function PieceDetail() {
                                 <ZoomImage
                                     src={`${BASE_IMAGE_URL}${imagenes[currentImageIndex].ruta}`}
                                     alt={producto.nombre}
-                                    onDoubleClick={() => !isMobile && setShowModal(true)}
-                                    onClick={() => isMobile && setShowModal(true)}
+                                    onClick={() => setShowModal(true)}
                                     enableZoom={!isMobile}
                                 />
                                 {showModal && (

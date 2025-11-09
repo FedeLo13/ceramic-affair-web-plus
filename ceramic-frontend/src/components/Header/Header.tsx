@@ -218,7 +218,7 @@ export default function Header() {
             </div>
 
             {/*Botón de barra lateral */}
-            <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="Toggle Sidebar">
                 <FaBars size={24} />
             </button>
 
