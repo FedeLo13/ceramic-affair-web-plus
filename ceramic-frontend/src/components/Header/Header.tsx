@@ -173,9 +173,6 @@ export default function Header() {
                         <NavLink to="/contact">Contact</NavLink>
                         <NavLink to="/find-me">Find Me</NavLink>
                     </nav>
-                    <a href="https://www.instagram.com/ceramic_affair/" target="_blank" rel="noopener noreferrer" className="instagram-icon">
-                        <FaInstagram size={24} />
-                    </a>
                 </div>
             </header>
 
@@ -233,7 +230,7 @@ export default function Header() {
                         className="user-toggle"
                         onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                     >
-                        <FaUserCircle size={40} />
+                        <FaUserCircle size={24} />
                     </button>
 
                     {userDropdownOpen && (
@@ -273,7 +270,7 @@ export default function Header() {
                 {/* Carrito de compras */}
                 <div className="cart-icon" ref={cartDropdownRef}>
                     <button className="cart-toggle" onClick={() => setCartDropdownOpen(!cartDropdownOpen)}>
-                        <FaShoppingCart size={40} />
+                        <FaShoppingCart size={24} />
                     </button>
 
                     {cartDropdownOpen && (
@@ -376,6 +373,11 @@ export default function Header() {
                         </div>
                     )}
                 </div>
+
+                {/* Icono de Instagram */}
+                <a href="https://www.instagram.com/ceramic_affair/" target="_blank" rel="noopener noreferrer" className="instagram-icon">
+                    <FaInstagram size={24} />
+                </a>
             </div>
 
             {/* Overlay */}
