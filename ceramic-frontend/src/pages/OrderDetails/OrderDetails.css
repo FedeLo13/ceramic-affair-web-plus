@@ -37,6 +37,7 @@
 .order-details-form-group label {
   font-weight: 600;
   color: #2b3a64;
+  font-size: 1.1rem;
 }
 
 .order-details-form-group input {
@@ -73,6 +74,7 @@
   border: none;
   cursor: pointer;
   font-weight: 600;
+  font-size: 1.1rem;
   color: #fff;
   transition: background 0.2s ease;
 }
@@ -122,17 +124,18 @@
 
 .product-info h4 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #2b3a64;
 }
 
 .product-info .price {
   font-weight: 600;
-  color: #333;
+  font-size: 1.1rem;
+  color: #2b3a64;
 }
 
 .product-info .category {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #777;
 }
 

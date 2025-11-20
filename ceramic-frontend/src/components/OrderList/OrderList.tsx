@@ -79,7 +79,7 @@ export default function OrderList({ fetchOrders, title = "Orders", showClient = 
                                     <img className="order-preview" src={preview} alt={first?.producto?.nombre ?? "preview"} />
                                     <div className="order-meta">
                                         <div className="order-title">
-                                            <span className="product-name">{first?.producto?.nombre ?? "—"}</span>
+                                            <span className="order-product-name">{first?.producto?.nombre ?? "—"}</span>
                                             {moreCount > 0 && <span className="more">(and {moreCount} more)</span>}
                                         </div>
                                         <span className="order-id">#{order.id}</span>

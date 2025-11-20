@@ -64,6 +64,7 @@
 
 .admin-category-name {
   font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .admin-categories-actions {
@@ -76,6 +77,7 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   margin-right: 0.5rem;
+  font-size: 1rem;
   flex: 1;
 }
 
@@ -84,7 +86,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   min-height: 38px;
   transition: background 0.2s, opacity 0.2s;
@@ -117,7 +119,7 @@
 .admin-categories-btn-add {
   border: none;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   font-weight: 600;
   transition: background 0.2s, opacity 0.2s;
   background: #fafafa;
