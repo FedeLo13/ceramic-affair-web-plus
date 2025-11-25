@@ -12,6 +12,16 @@
     display: flex;
     gap: 100px; /* espacio entre enlaces */
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Responsive: en pantallas pequeñas apilar verticalmente */
+@media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 .footer-link {
