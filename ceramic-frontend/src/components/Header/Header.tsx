@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaInstagram, FaBars, FaCrown, FaUserCircle, FaShoppingCart, FaTrash } from "react-icons/fa";
+import { FaInstagram, FaBars, FaCrown, FaUserCircle, FaShoppingCart, FaTrash, FaBell } from "react-icons/fa";
 import "./Header.css";
 import { useAuth } from "../../context/AuthContext";
 import type { CarritoDTO, CarritoItemDTO } from "../../types/carrito.types";
@@ -378,6 +378,14 @@ export default function Header() {
                 <a href="https://www.instagram.com/ceramic_affair/" target="_blank" rel="noopener noreferrer" className="instagram-icon">
                     <FaInstagram size={24} />
                 </a>
+
+                {/* Icono de campanita para la Newsletter */}
+                <NavLink
+                    to="/contact#newsletter"
+                    className="newsletter-icon"
+                >
+                    <FaBell size={24} />
+                </NavLink>
             </div>
 
             {/* Overlay */}
